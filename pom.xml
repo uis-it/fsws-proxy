@@ -1,98 +1,186 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>no.uis.fsws</groupId>
-    <artifactId>fsws-proxy</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>Proxy for FS-WS</name>
-    <description>Simple CXF Java-first SOAP project using Spring configuration</description>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>no.uis.fsws</groupId>
+  <artifactId>fsws-proxy</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>Proxy for FS-WS</name>
+  <description>Simple CXF Java-first SOAP project using Spring configuration</description>
 
-    <parent>
-      <groupId>no.uis</groupId>
-      <artifactId>parent-pom</artifactId>
-      <version>2.0.5</version>
-    </parent>
+  <parent>
+    <groupId>no.uis</groupId>
+    <artifactId>parent-pom</artifactId>
+    <version>2.0.5</version>
+  </parent>
 
-    <scm>
-      <url>http://forge.uis.no/projects/fsws-proxy/repository</url>
-      <connection>scm:git:git://forge.uis.no/fs-ws/fsws-proxy.git</connection>
-      <developerConnection>scm:git:ssh://git@forge.uis.no/fs-ws/fsws-proxy.git</developerConnection>
-    </scm>
-    <issueManagement>
-      <system>ChiliProject</system>
-      <url>http://forge.uis.no/projects/fsws-proxy/issues</url>
-    </issueManagement>
-    <inceptionYear>2013</inceptionYear>
-    <ciManagement>
-      <system>Jenkins</system>
-      <url>http://build01.uis.no/jenkins/job/ws-fsws-proxy</url>
-    </ciManagement>
-    
+  <scm>
+    <url>http://forge.uis.no/projects/fsws-proxy/repository</url>
+    <connection>scm:git:git://forge.uis.no/fs-ws/fsws-proxy.git</connection>
+    <developerConnection>scm:git:ssh://git@forge.uis.no/fs-ws/fsws-proxy.git</developerConnection>
+  </scm>
+  <issueManagement>
+    <system>ChiliProject</system>
+    <url>http://forge.uis.no/projects/fsws-proxy/issues</url>
+  </issueManagement>
+  <inceptionYear>2013</inceptionYear>
+  <ciManagement>
+    <system>Jenkins</system>
+    <url>http://build01.uis.no/jenkins/job/ws-fsws-proxy</url>
+  </ciManagement>
+
+  <properties>
+    <cxf.version>2.7.5</cxf.version>
+    <spring.version>3.0.7.RELEASE</spring.version>
+    <junit.version>4.11</junit.version>
+    <fsimport.version>3.0.0-SNAPSHOT</fsimport.version>
+  </properties>
+  
+  <dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>2.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>2.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>3.0.7.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>no.uis.fsws</groupId>
+        <artifactId>studinfo-import</artifactId>
+        <version>${fsimport.version}</version>
+      </dependency>
     </dependencies>
+  </dependencyManagement>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>no.uis.fsws</groupId>
+      <artifactId>studinfo-import</artifactId>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <!-- mvn clean install tomcat:run-war to deploy
-                    Look for "Running war on http://xxx" and
-                    "Setting the server's publish address to be /yyy"
-                    in console output; WSDL browser address will be
-                    concatenation of the two: http://xxx/yyy?wsdl
-                    -->
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>2.0</version>
-                    <executions>
-                        <execution>
-                            <id>start-tomcat</id>
-                            <goals>
-                                <goal>run-war</goal>
-                            </goals>
-                            <phase>pre-integration-test</phase>
-                            <configuration>
-                                <port>${test.server.port}</port>
-                                <path>/webservice</path>
-                                <fork>true</fork>
-                                <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
-                    <configuration>
-                        <projectNameTemplate>ws-[artifactId]</projectNameTemplate>
-                        <wtpmanifest>true</wtpmanifest>
-                        <wtpapplicationxml>true</wtpapplicationxml>
-                        <wtpversion>2.0</wtpversion>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <!-- mvn clean install tomcat:run-war to deploy Look for "Running 
+            war on http://xxx" and "Setting the server's publish address to be /yyy" 
+            in console output; WSDL browser address will be concatenation of the two: 
+            http://xxx/yyy?wsdl -->
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.0</version>
+          <executions>
+            <execution>
+              <id>start-tomcat</id>
+              <goals>
+                <goal>run-war</goal>
+              </goals>
+              <phase>pre-integration-test</phase>
+              <configuration>
+                <port>${test.server.port}</port>
+                <path>/webservice</path>
+                <fork>true</fork>
+                <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <configuration>
+            <projectNameTemplate>ws-[artifactId]</projectNameTemplate>
+            <wtpmanifest>true</wtpmanifest>
+            <wtpapplicationxml>true</wtpapplicationxml>
+            <wtpversion>2.0</wtpversion>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>src/main/webapp</directory>
+              <filtering>true</filtering>
+              <includes>
+                <include>version.txt</include>
+                <include>WEB-INF/web.xml</include>
+              </includes>
+            </resource>
+            <resource>
+              <directory>src/main/webapp</directory>
+              <filtering>false</filtering>
+              <excludes>
+                <exclude>version.txt</exclude>
+                <exclude>WEB-INF/web.xml</exclude>
+              </excludes>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>2.1.4</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+          <configLocation>checkstyle/checkstyle.xml</configLocation>
+          <propertyExpansion>basedir=${basedir}</propertyExpansion>
+          <suppressionsLocation>checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+          <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
 </project>
