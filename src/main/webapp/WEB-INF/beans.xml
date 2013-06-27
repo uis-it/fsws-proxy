@@ -3,13 +3,23 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xmlns:jaxws="http://cxf.apache.org/jaxws"
   xmlns:cxf="http://cxf.apache.org/core"
+  xmlns:context="http://www.springframework.org/schema/context"  
   xmlns:ns="http://proxy.fsws.uis.no"
   xsi:schemaLocation="
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
     http://cxf.apache.org/core  http://cxf.apache.org/schemas/core.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
+  <context:property-placeholder location="file:///${catalina.base}/conf/ws-fsws-proxy.xml" />
+
   <import resource="classpath:META-INF/cxf/cxf.xml" />
+  <!--import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /-->
+  <!--import resource="classpath:META-INF/cxf/cxf-servlet.xml" /-->
+
+  <context:annotation-config />
+  <!--bean
+    class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" /-->
 
   <jaxws:endpoint
     id="studinfoProxyService"
@@ -42,6 +52,7 @@
   </jaxws:endpoint>
 
   <bean id="studinfoProxy" class="no.uis.fsws.proxy.impl.StudinfoProxyImpl">
+    <property name="serviceFactory" ref="studinfoServiceFactory"/>
   </bean>
 
   <bean id="cdmProxy" class="no.uis.fsws.proxy.impl.CdmProxyImpl">
@@ -52,5 +63,16 @@
     <property name="authorizer">
       <bean class="no.uis.fsws.proxy.impl.AuthorizeAllAuthorizer"/>
     </property>
+  </bean>
+
+  <bean id="studinfoServiceFactory" class="no.uis.fsws.proxy.impl.StudinfoServiceFactory">
+    <property name="copyXml" value="true"/>
+    <property name="fswsAddress" value="${fs.ws.studinfo.url}"/>
+    <property name="transformerUrls">
+      <map>
+        <entry key="uis" value="classpath:fspreprocess-stable.xsl"/>
+      </map>
+    </property>
+    <property name="xmlSourceParser" value="no.uis.fsws.studinfo.impl.SkippingAmpersandParser"/>
   </bean>
 </beans>

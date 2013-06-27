@@ -16,10 +16,13 @@
 
 package no.uis.fsws.proxy;
 
-import java.security.Principal;
 
-public interface Authorizer {
-  ProxyPrincipal authenticate(String username, String password);
+/**
+ * Interface for StudinfoImport factory.
+ *
+ * @param <T>
+ */
+public interface FsWsServiceFactory<T> {
 
-  boolean hasAuthorization(Principal principal, String authorizationType, String authorization);
+  T getService(ProxyPrincipal p);
 }

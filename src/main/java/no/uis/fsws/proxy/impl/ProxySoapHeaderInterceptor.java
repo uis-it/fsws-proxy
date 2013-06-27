@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import no.uis.fsws.proxy.Authorizer;
+import no.uis.fsws.proxy.ProxyPrincipal;
 
 import org.apache.cxf.binding.soap.interceptor.SoapHeaderInterceptor;
 import org.apache.cxf.configuration.security.AuthorizationPolicy;
@@ -89,9 +90,10 @@ public class ProxySoapHeaderInterceptor extends SoapHeaderInterceptor {
     }
 
     boolean authorized = false;
-    Principal principal = authorizer.authenticate(policy.getUserName(), policy.getPassword());
+    ProxyPrincipal principal = authorizer.authenticate(policy.getUserName(), policy.getPassword());
     if (principal != null) {
       if (authorizer.hasAuthorization(principal, policy.getAuthorizationType(), policy.getAuthorization())) {
+        message.setContextualProperty(AbstractFswsProxy.PRINCIPAL, principal);
         authorized = true;
       }
     }

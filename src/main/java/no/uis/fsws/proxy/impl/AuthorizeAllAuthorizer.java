@@ -19,29 +19,38 @@ package no.uis.fsws.proxy.impl;
 import java.security.Principal;
 
 import no.uis.fsws.proxy.Authorizer;
+import no.uis.fsws.proxy.ProxyPrincipal;
 
 /**
  * Simple Authorizer that does not verify the password and authorizes all users. 
  */
 public class AuthorizeAllAuthorizer implements Authorizer {
 
-  private static final class SimplePrincipal implements Principal {
+  private static final class SimplePrincipal implements ProxyPrincipal {
     
     private final String name;
+    private String password;
     
-    private SimplePrincipal(String name) {
+    private SimplePrincipal(String name, String password) {
       this.name = name;
+      this.password = password;
     }
     
     @Override
     public String getName() {
       return name;
     }
+
+    @Override
+    public String getPassword() {
+      // TODO Auto-generated method stub
+      return null;
+    }
   }
 
   @Override
-  public Principal authenticate(String username, String password) {
-    return new SimplePrincipal(username);
+  public ProxyPrincipal authenticate(String username, String password) {
+    return new SimplePrincipal(username, password);
   }
 
   @Override

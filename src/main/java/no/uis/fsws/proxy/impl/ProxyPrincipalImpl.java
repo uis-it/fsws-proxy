@@ -14,12 +14,29 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy;
+package no.uis.fsws.proxy.impl;
 
 import java.security.Principal;
 
-public interface Authorizer {
-  ProxyPrincipal authenticate(String username, String password);
+/**
+ * A username/password principal. 
+ */
+public class ProxyPrincipalImpl implements Principal {
 
-  boolean hasAuthorization(Principal principal, String authorizationType, String authorization);
+  private final String username;
+  private final String password;
+
+  ProxyPrincipalImpl(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+  
+  @Override
+  public String getName() {
+    return this.username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
 }

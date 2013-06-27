@@ -16,13 +16,16 @@
 
 package no.uis.fsws.proxy.impl;
 
+import java.security.Principal;
+
 import no.uis.fsws.proxy.StudinfoProxy;
+import no.uis.fsws.studinfo.StudInfoImport;
 import no.uis.fsws.studinfo.data.FsStudieinfo;
 
 /**
  * Implementation using the studinfo-import library. 
  */
-public class StudinfoProxyImpl implements StudinfoProxy {
+public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> implements StudinfoProxy {
 
   @Override
   public FsStudieinfo getStudieprogramForOrgenhet(int arstall,
@@ -31,7 +34,15 @@ public class StudinfoProxyImpl implements StudinfoProxy {
       Integer instituttnr, Integer gruppenr,
       boolean medUPinfo)
   {
-    // TODO Auto-generated method stub
+    StudInfoImport svc = getServiceForPrincipal();
+    
+    if (svc != null) {
+      try {
+        return svc.fetchStudyPrograms(institusjonsnr, fakultetsnr != null ? fakultetsnr : -1, arstall, terminkode, medUPinfo, sprak);
+      } catch(Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
     return null;
   }
 
