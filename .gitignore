@@ -1,0 +1,7 @@
+*~
+*.bak
+/.settings
+/.project
+/.springBeans
+/.classpath
+/target/
