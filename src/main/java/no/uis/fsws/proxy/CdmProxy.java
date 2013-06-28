@@ -18,6 +18,11 @@ package no.uis.fsws.proxy;
 
 import javax.jws.WebService;
 
+/**
+ * Interface for FS-WS CDM.
+ * @author 2904630
+ *
+ */
 @WebService
 public interface CdmProxy {
   String getStudieData();

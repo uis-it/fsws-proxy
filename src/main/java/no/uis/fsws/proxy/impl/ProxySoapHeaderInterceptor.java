@@ -19,7 +19,6 @@ package no.uis.fsws.proxy.impl;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -73,8 +72,6 @@ public class ProxySoapHeaderInterceptor extends SoapHeaderInterceptor {
   @Override
   public void handleMessage(Message message) throws Fault {
 
-    // This is supposed to be set by CXF, but i had to set it explicitly, so don't
-    // need this anymore
     AuthorizationPolicy policy = message.get(AuthorizationPolicy.class);
 
     // If the policy is not set, the user did not specify credentials

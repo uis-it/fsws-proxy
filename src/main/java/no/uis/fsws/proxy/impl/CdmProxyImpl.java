@@ -18,6 +18,9 @@ package no.uis.fsws.proxy.impl;
 
 import no.uis.fsws.proxy.CdmProxy;
 
+/**
+ * Implementation of CDM proxy.
+ */
 public class CdmProxyImpl implements CdmProxy {
 
   @Override

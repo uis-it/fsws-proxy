@@ -18,6 +18,11 @@ package no.uis.fsws.proxy;
 
 import java.security.Principal;
 
+/**
+ * Interface for Authorizer.
+ * @author 2904630
+ *
+ */
 public interface Authorizer {
   ProxyPrincipal authenticate(String username, String password);
 

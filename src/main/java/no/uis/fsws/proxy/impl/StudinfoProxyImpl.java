@@ -16,13 +16,11 @@
 
 package no.uis.fsws.proxy.impl;
 
-import java.security.Principal;
-
-import org.springframework.jmx.export.annotation.ManagedResource;
-
 import no.uis.fsws.proxy.StudinfoProxy;
 import no.uis.fsws.studinfo.StudInfoImport;
 import no.uis.fsws.studinfo.data.FsStudieinfo;
+
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
  * Implementation using the studinfo-import library. 

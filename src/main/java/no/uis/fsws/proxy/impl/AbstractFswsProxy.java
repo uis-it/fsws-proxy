@@ -16,9 +16,6 @@
 
 package no.uis.fsws.proxy.impl;
 
-import java.security.Principal;
-import java.util.Map;
-
 import no.uis.fsws.proxy.FsWsServiceFactory;
 import no.uis.fsws.proxy.ProxyPrincipal;
 

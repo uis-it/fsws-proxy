@@ -17,14 +17,17 @@
 package no.uis.fsws.proxy.impl;
 
 import java.net.URL;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import no.uis.fsws.proxy.FsWsServiceFactory;
+import no.uis.fsws.proxy.ProxyPrincipal;
+import no.uis.fsws.studinfo.StudInfoImport;
+import no.uis.fsws.studinfo.impl.StudInfoImportImpl;
+import no.usit.fsws.studinfo.StudInfoService;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Required;
@@ -33,12 +36,6 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.jmx.export.annotation.ManagedOperationParameters;
 import org.springframework.jmx.export.annotation.ManagedResource;
-
-import no.uis.fsws.proxy.FsWsServiceFactory;
-import no.uis.fsws.proxy.ProxyPrincipal;
-import no.uis.fsws.studinfo.StudInfoImport;
-import no.uis.fsws.studinfo.impl.StudInfoImportImpl;
-import no.usit.fsws.studinfo.StudInfoService;
 
 /**
  * Creates a proxy for FW-WS studinfo.
@@ -53,7 +50,7 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
   private String fswsAddress;
   private String xmlSourceParser;
   private boolean copyXml;
-  private Map<String, URL> transformerUrls;
+  private Map<String, URL> transformerUrls = new HashMap<>();
 
   private Map<ProxyPrincipal, StudInfoImport> serviceCache = new HashMap<>();
   
@@ -63,8 +60,14 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
   }
 
   @Required
-  public void setTransformerUrls(Map<String, URL> transformerUrls) {
-    this.transformerUrls = transformerUrls;
+  public void setTransformerUrls(Map<String, URL> urls) {
+    synchronized(transformerUrls) {
+      transformerUrls.clear();
+      transformerUrls.putAll(urls);
+    }
+    synchronized(serviceCache) {
+      serviceCache.clear();
+    }
   }
 
   @ManagedOperation(description = "Get transformer URLs per username as a String")
@@ -158,7 +161,7 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
     }
   }
   
-  private URL getTransformerUrl(String username) {
+  protected URL getTransformerUrl(String username) {
     synchronized(transformerUrls) {
       return transformerUrls.get(username);
     }
