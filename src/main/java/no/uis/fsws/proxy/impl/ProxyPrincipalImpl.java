@@ -18,25 +18,17 @@ package no.uis.fsws.proxy.impl;
 
 import java.security.Principal;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+
 /**
  * A username/password principal. 
  */
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProxyPrincipalImpl implements Principal {
 
-  private final String username;
-  private final String password;
-
-  ProxyPrincipalImpl(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
-  
-  @Override
-  public String getName() {
-    return this.username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
+  @Getter @NonNull private final String name;
+  @Getter private final String password;
 }

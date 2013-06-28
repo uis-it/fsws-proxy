@@ -25,44 +25,36 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
 import no.uis.fsws.proxy.Authorizer;
 import no.uis.fsws.proxy.ProxyPrincipal;
 
 import org.apache.cxf.binding.soap.interceptor.SoapHeaderInterceptor;
 import org.apache.cxf.configuration.security.AuthorizationPolicy;
 import org.apache.cxf.endpoint.Endpoint;
-import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.transport.Conduit;
 import org.apache.cxf.ws.addressing.EndpointReferenceType;
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Authorization handler. Thanks to {@linkplain http://kpsoft-tech-blogs.blogspot.no/2011/10/apache-cxf-web-services-tomcat-basic.html}.
  */
+@Log4j
 public class ProxySoapHeaderInterceptor extends SoapHeaderInterceptor {
 
   private static final List<String> ZERO_CONTENT_LENGTH = Arrays.asList(new String[] {"0"});
 
-  private static final Logger LOG = Logger.getLogger(ProxySoapHeaderInterceptor.class);
-
-  private String realm = "realm";
+  @Setter private String realm = "realm";
+  @Setter(onMethod = @_(@Required)) @NonNull private Authorizer authorizer;
 
   private List<String> authenticateHeader;
 
-  private Authorizer authorizer;
-  
-  @Required
-  public void setAuthorizer(Authorizer authorizer) {
-    this.authorizer = authorizer;
-  }
-
-  public void setRealm(String realm) {
-    this.realm = realm;
-  }
   
   @PostConstruct
   protected void init() {
@@ -70,20 +62,20 @@ public class ProxySoapHeaderInterceptor extends SoapHeaderInterceptor {
   }
   
   @Override
-  public void handleMessage(Message message) throws Fault {
+  public void handleMessage(Message message) {
 
     AuthorizationPolicy policy = message.get(AuthorizationPolicy.class);
 
     // If the policy is not set, the user did not specify credentials
     // A 401 is sent to the client to indicate that authentication is required
     if (policy == null) {
-      LOG.warn("User attempted to log in with no credentials");
+      log.warn("User attempted to log in with no credentials");
       sendErrorResponse(message, HttpURLConnection.HTTP_UNAUTHORIZED);
       return;
     }
 
-    if (LOG.isInfoEnabled()) {
-      LOG.info("Logged in user: " + policy.getUserName());
+    if (log.isInfoEnabled()) {
+      log.info("Logged in user: " + policy.getUserName());
     }
 
     boolean authorized = false;
@@ -96,8 +88,8 @@ public class ProxySoapHeaderInterceptor extends SoapHeaderInterceptor {
     }
 
     if (!authorized) {
-      if (LOG.isEnabledFor(Level.WARN)) {
-        LOG.warn("User not authorized: " + policy.getUserName());
+      if (log.isEnabledFor(Level.WARN)) {
+        log.warn("User not authorized: " + policy.getUserName());
       }
       sendErrorResponse(message, HttpURLConnection.HTTP_FORBIDDEN);
     }
@@ -137,17 +129,17 @@ public class ProxySoapHeaderInterceptor extends SoapHeaderInterceptor {
 
   private Conduit getConduit(Message inMessage) throws IOException {
 
-    if (LOG.isTraceEnabled()) {
-      LOG.trace("inmessage is: " + inMessage);
+    if (log.isTraceEnabled()) {
+      log.trace("inmessage is: " + inMessage);
     }
     Exchange exchange = inMessage.getExchange();
-    if (exchange == null && LOG.isInfoEnabled()) {
-      LOG.info("Exchnage is null");
+    if (exchange == null && log.isInfoEnabled()) {
+      log.info("Exchnage is null");
     }
 
     EndpointReferenceType target = exchange.get(EndpointReferenceType.class);
-    if (target == null && LOG.isInfoEnabled()) {
-      LOG.info("target is null");
+    if (target == null && log.isInfoEnabled()) {
+      log.info("target is null");
     }
 
     Conduit conduit = exchange.getDestination().getBackChannel(inMessage, null, target);

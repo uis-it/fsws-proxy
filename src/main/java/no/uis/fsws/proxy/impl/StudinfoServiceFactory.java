@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import lombok.NonNull;
+import lombok.Setter;
+
 import no.uis.fsws.proxy.FsWsServiceFactory;
 import no.uis.fsws.proxy.ProxyPrincipal;
 import no.uis.fsws.studinfo.StudInfoImport;
@@ -47,18 +50,13 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 )
 public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport> {
 
-  private String fswsAddress;
-  private String xmlSourceParser;
-  private boolean copyXml;
+  @Setter(onMethod = @_(@Required)) @NonNull private String fswsAddress;
+  @Setter private String xmlSourceParser;
+  @Setter private boolean copyXml;
   private Map<String, URL> transformerUrls = new HashMap<>();
 
   private Map<ProxyPrincipal, StudInfoImport> serviceCache = new HashMap<>();
   
-  @Required
-  public void setFswsAddress(String fswsAddress) {
-    this.fswsAddress = fswsAddress;
-  }
-
   @Required
   public void setTransformerUrls(Map<String, URL> urls) {
     synchronized(transformerUrls) {
@@ -94,14 +92,6 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
     // do the clean-up successively to avoid dead-lock
     putTransformerUrl(username, trUrl);
     clearServiceCacheEntry(username);
-  }
-
-  public void setXmlSourceParser(String xmlSourceParser) {
-    this.xmlSourceParser = xmlSourceParser;
-  }
-
-  public void setCopyXml(boolean copyXml) {
-    this.copyXml = copyXml;
   }
 
   @Override

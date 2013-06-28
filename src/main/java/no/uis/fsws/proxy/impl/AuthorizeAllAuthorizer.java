@@ -18,6 +18,10 @@ package no.uis.fsws.proxy.impl;
 
 import java.security.Principal;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import no.uis.fsws.proxy.Authorizer;
 import no.uis.fsws.proxy.ProxyPrincipal;
 
@@ -26,26 +30,10 @@ import no.uis.fsws.proxy.ProxyPrincipal;
  */
 public class AuthorizeAllAuthorizer implements Authorizer {
 
+  @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
   private static final class SimplePrincipal implements ProxyPrincipal {
-    
-    private final String name;
-    private String password;
-    
-    private SimplePrincipal(String name, String password) {
-      this.name = name;
-      this.password = password;
-    }
-    
-    @Override
-    public String getName() {
-      return name;
-    }
-
-    @Override
-    public String getPassword() {
-      // TODO Auto-generated method stub
-      return null;
-    }
+    @Getter private final String name;
+    @Getter private final String password;
   }
 
   @Override

@@ -16,6 +16,8 @@
 
 package no.uis.fsws.proxy.impl;
 
+import lombok.NonNull;
+import lombok.Setter;
 import no.uis.fsws.proxy.FsWsServiceFactory;
 import no.uis.fsws.proxy.ProxyPrincipal;
 
@@ -33,7 +35,7 @@ public abstract class AbstractFswsProxy<T> {
    */
   public static final String PRINCIPAL = "fsws-proxy.principal";
   
-  private FsWsServiceFactory<T> serviceFactory;
+  @Setter(onMethod = @_(@Required)) @NonNull private FsWsServiceFactory<T> serviceFactory;
 
   protected ProxyPrincipal getCurrentPrinciapl() {
 
@@ -43,12 +45,6 @@ public abstract class AbstractFswsProxy<T> {
     }
     return null;
   }
-
-  @Required
-  public void setServiceFactory(FsWsServiceFactory<T> factory) {
-    this.serviceFactory = factory;
-  }
-
 
   public T getServiceForPrincipal() {
     ProxyPrincipal p = getCurrentPrinciapl();

@@ -34,6 +34,7 @@
     <spring.version>3.0.7.RELEASE</spring.version>
     <junit.version>4.11</junit.version>
     <fsimport.version>3.0.0-SNAPSHOT</fsimport.version>
+    <lombok.version>0.11.8</lombok.version>
   </properties>
   
   <dependencyManagement>
@@ -87,6 +88,12 @@
     <dependency>
       <groupId>no.uis.fsws</groupId>
       <artifactId>studinfo-import</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
