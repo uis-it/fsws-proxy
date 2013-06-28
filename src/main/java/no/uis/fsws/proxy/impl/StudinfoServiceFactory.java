@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.annotation.PreDestroy;
+
 import lombok.NonNull;
 import lombok.Setter;
 
@@ -120,13 +122,12 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
         }
       }
     }
-    
     return svc;
   }
 
   /**
-   * Remove all service entries that have a principal with the given username.
-   * Typically ther is just one principal with any given user name, 
+   * Remove all service entries that have a principal with the given user name.
+   * Typically there is just one principal with any given user name, 
    * but an authenticator implementation might choose to support multiple principal
    * with the same name but different credentials.  
    * @param username
@@ -155,5 +156,10 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
     synchronized(transformerUrls) {
       return transformerUrls.get(username);
     }
+  }
+  
+  @PreDestroy
+  public void close() {
+      serviceCache.clear();
   }
 }

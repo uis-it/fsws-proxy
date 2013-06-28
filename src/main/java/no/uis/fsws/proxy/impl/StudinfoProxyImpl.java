@@ -16,10 +16,21 @@
 
 package no.uis.fsws.proxy.impl;
 
+import java.util.concurrent.Callable;
+
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PreDestroy;
+
+import lombok.Setter;
+
 import no.uis.fsws.proxy.StudinfoProxy;
 import no.uis.fsws.studinfo.StudInfoImport;
 import no.uis.fsws.studinfo.data.FsStudieinfo;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
@@ -32,18 +43,30 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 )
 public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> implements StudinfoProxy {
 
+  @Setter(onMethod = @_(@Required)) private ThreadPoolExecutor executor;
+  @Setter private long timeoutMinutes = 30L;
+  
   @Override
-  public FsStudieinfo getStudieprogramForOrgenhet(int arstall,
-      String terminkode, String sprak,
-      int institusjonsnr, Integer fakultetsnr,
-      Integer instituttnr, Integer gruppenr,
-      boolean medUPinfo)
+  public FsStudieinfo getStudieprogramForOrgenhet(final int arstall,
+      final String terminkode, final String sprak,
+      final int institusjonsnr, final Integer fakultetsnr,
+      final Integer instituttnr, final Integer gruppenr,
+      final boolean medUPinfo)
   {
-    StudInfoImport svc = getServiceForPrincipal();
+    final StudInfoImport svc = getServiceForPrincipal();
     
     if (svc != null) {
       try {
-        return svc.fetchStudyPrograms(institusjonsnr, fakultetsnr != null ? fakultetsnr : -1, arstall, terminkode, medUPinfo, sprak);
+     
+        Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
+
+          @Override
+          public FsStudieinfo call() throws Exception {
+            return svc.fetchStudyPrograms(institusjonsnr, fakultetsnr != null ? fakultetsnr : -1, arstall, terminkode, medUPinfo, sprak);
+          }
+        });
+        
+        return future.get(timeoutMinutes, TimeUnit.MINUTES);
       } catch(Exception e) {
         throw new RuntimeException(e);
       }
@@ -79,5 +102,9 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
     return null;
   }
 
+  @PreDestroy
+  public void cleanup() {
+    executor.shutdown();
+  }
 }
 

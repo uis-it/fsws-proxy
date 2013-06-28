@@ -53,9 +53,16 @@
 
   <bean id="studinfoProxy" class="no.uis.fsws.proxy.impl.StudinfoProxyImpl">
     <property name="serviceFactory" ref="studinfoServiceFactory"/>
+    <property name="executor" ref="studinfoExecutor"/>
   </bean>
 
   <bean id="cdmProxy" class="no.uis.fsws.proxy.impl.CdmProxyImpl">
+  </bean>
+  
+  <bean id="studinfoExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean">
+    <property name="daemon" value="true"/>
+    <property name="maxPoolSize" value="1"/>
+    <property name="threadNamePrefix" value="Studinfo-"/>
   </bean>
   
   <bean id="authorizationInterceptor" class="no.uis.fsws.proxy.impl.ProxySoapHeaderInterceptor">
