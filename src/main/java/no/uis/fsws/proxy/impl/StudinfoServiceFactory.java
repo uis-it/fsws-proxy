@@ -81,7 +81,7 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
   @ManagedOperationParameters(
     {
       @ManagedOperationParameter(name = "username", description = "the username"),
-      @ManagedOperationParameter(name = "url", description = "string representation og the URL, Spring syntax")
+      @ManagedOperationParameter(name = "url", description = "string representation of the URL, Spring syntax")
     }
   )
   public void setUserTransformerUrl(String username, String url) {

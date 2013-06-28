@@ -16,10 +16,11 @@
 
 package no.uis.fsws.proxy.impl;
 
-import java.security.Principal;
+import no.uis.fsws.proxy.ProxyPrincipal;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -27,7 +28,8 @@ import lombok.NonNull;
  * A username/password principal. 
  */
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProxyPrincipalImpl implements Principal {
+@EqualsAndHashCode
+public class ProxyPrincipalImpl implements ProxyPrincipal {
 
   @Getter @NonNull private final String name;
   @Getter private final String password;
