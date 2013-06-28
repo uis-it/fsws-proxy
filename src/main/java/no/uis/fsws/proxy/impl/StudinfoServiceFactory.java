@@ -17,11 +17,22 @@
 package no.uis.fsws.proxy.impl;
 
 import java.net.URL;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.propertyeditors.URLEditor;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedOperationParameter;
+import org.springframework.jmx.export.annotation.ManagedOperationParameters;
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 import no.uis.fsws.proxy.FsWsServiceFactory;
 import no.uis.fsws.proxy.ProxyPrincipal;
@@ -32,6 +43,11 @@ import no.usit.fsws.studinfo.StudInfoService;
 /**
  * Creates a proxy for FW-WS studinfo.
  */
+@ManagedResource(
+  objectName = "uis:service=ws-fsws-proxy,component=studinfo-service-factory",
+  description = "Studinfo Service Proxy",
+  log = false
+)
 public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport> {
 
   private String fswsAddress;
@@ -49,6 +65,32 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
   @Required
   public void setTransformerUrls(Map<String, URL> transformerUrls) {
     this.transformerUrls = transformerUrls;
+  }
+
+  @ManagedOperation(description = "Get transformer URLs per username as a String")
+  public String getTransformerUrlsAsString() {
+    // TODO: this string could be cached
+    synchronized(transformerUrls) {
+      Map<String, URL> m = new TreeMap<>(transformerUrls);
+      return m.toString();
+    }
+  }
+  
+  @ManagedOperation(description = "Set the user-dependent transformer URL")
+  @ManagedOperationParameters(
+    {
+      @ManagedOperationParameter(name = "username", description = "the username"),
+      @ManagedOperationParameter(name = "url", description = "string representation og the URL, Spring syntax")
+    }
+  )
+  public void setUserTransformerUrl(String username, String url) {
+    URLEditor urlEditor = new URLEditor();
+    urlEditor.setAsText(url);
+    URL trUrl = (URL)urlEditor.getValue();
+
+    // do the clean-up successively to avoid dead-lock
+    putTransformerUrl(username, trUrl);
+    clearServiceCacheEntry(username);
   }
 
   public void setXmlSourceParser(String xmlSourceParser) {
@@ -85,10 +127,40 @@ public class StudinfoServiceFactory implements FsWsServiceFactory<StudInfoImport
         }
       }
     }
+    
     return svc;
   }
 
+  /**
+   * Remove all service entries that have a principal with the given username.
+   * Typically ther is just one principal with any given user name, 
+   * but an authenticator implementation might choose to support multiple principal
+   * with the same name but different credentials.  
+   * @param username
+   */
+  private void clearServiceCacheEntry(String username) {
+    synchronized(serviceCache) {
+      List<ProxyPrincipal> toRemove = new ArrayList<ProxyPrincipal>();
+      for (ProxyPrincipal p : serviceCache.keySet()) {
+        if (p.getName().equals(username)) {
+          toRemove.add(p);
+        }
+      }
+      for (ProxyPrincipal p : toRemove) {
+        serviceCache.remove(p);
+      }
+    }
+  }
+  
+  private void putTransformerUrl(String username, URL trUrl) {
+    synchronized(transformerUrls) {
+      transformerUrls.put(username, trUrl);
+    }
+  }
+  
   private URL getTransformerUrl(String username) {
-    return transformerUrls.get(username);
+    synchronized(transformerUrls) {
+      return transformerUrls.get(username);
+    }
   }
 }

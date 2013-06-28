@@ -18,6 +18,8 @@ package no.uis.fsws.proxy.impl;
 
 import java.security.Principal;
 
+import org.springframework.jmx.export.annotation.ManagedResource;
+
 import no.uis.fsws.proxy.StudinfoProxy;
 import no.uis.fsws.studinfo.StudInfoImport;
 import no.uis.fsws.studinfo.data.FsStudieinfo;
@@ -25,6 +27,11 @@ import no.uis.fsws.studinfo.data.FsStudieinfo;
 /**
  * Implementation using the studinfo-import library. 
  */
+@ManagedResource(
+  objectName = "uis:service=ws-fsws-proxy,component=studinfo",
+  description = "Studinfo Proxy",
+  log = false
+)
 public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> implements StudinfoProxy {
 
   @Override
