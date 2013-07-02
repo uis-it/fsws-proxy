@@ -62,8 +62,8 @@ public interface StudinfoProxy {
   FsStudieinfo getEmne(
       @WebParam(name="arstall") int arstall,
       @WebParam(name="terminkode") @XmlElement(required=true) String terminkode,
-      @WebParam(name="medUPinfo") boolean medUPinfo,
       @WebParam(name="sprak") @XmlElement(required=true) String sprak,
+      @WebParam(name="institusjonsnr") int institusjonsnr,
       @WebParam(name="emnekode") @XmlElement(required=true) String emnekode,
       @WebParam(name="versjonskode") @XmlElement(required=true) String versjonskode
       );

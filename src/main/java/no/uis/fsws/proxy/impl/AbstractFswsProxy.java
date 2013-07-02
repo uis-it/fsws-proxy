@@ -18,6 +18,7 @@ package no.uis.fsws.proxy.impl;
 
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import no.uis.fsws.proxy.FsWsServiceFactory;
 import no.uis.fsws.proxy.ProxyPrincipal;
 
@@ -29,11 +30,13 @@ import org.springframework.beans.factory.annotation.Required;
  * Common base class for Fsws Proxies.
  * @param <T>
  */
+@Log4j
 public abstract class AbstractFswsProxy<T> {
   /**
    * CXF context property name for the user principal.
    */
   public static final String PRINCIPAL = "fsws-proxy.principal";
+  private static final String NO_SERVICE_CONFIGURED_FOR_USER = "No service configured for user";
   
   @Setter(onMethod = @_(@Required)) @NonNull private FsWsServiceFactory<T> serviceFactory;
 
@@ -46,11 +49,20 @@ public abstract class AbstractFswsProxy<T> {
     return null;
   }
 
+  /**
+   * @throws IllegalArgumentException if either user or service not found
+   * @return The service proxy for the given user 
+   */
   public T getServiceForPrincipal() {
     ProxyPrincipal p = getCurrentPrinciapl();
-    if (p == null) {
-      return null;
+    T svc = null;
+    if (p != null) {
+      svc = serviceFactory.getService(p);
+      if (svc != null) {
+        return svc;
+      }
     }
-    return serviceFactory.getService(p);
+    log.warn(NO_SERVICE_CONFIGURED_FOR_USER);
+    throw new IllegalStateException(NO_SERVICE_CONFIGURED_FOR_USER);
   }
 }

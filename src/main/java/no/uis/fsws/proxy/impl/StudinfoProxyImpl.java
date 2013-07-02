@@ -18,9 +18,11 @@ package no.uis.fsws.proxy.impl;
 
 import java.util.concurrent.Callable;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PreDestroy;
 
@@ -55,51 +57,90 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
   {
     final StudInfoImport svc = getServiceForPrincipal();
     
-    if (svc != null) {
-      try {
-     
-        Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
+    try {
+      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
 
-          @Override
-          public FsStudieinfo call() throws Exception {
-            return svc.fetchStudyPrograms(institusjonsnr, fakultetsnr != null ? fakultetsnr : -1, arstall, terminkode, medUPinfo, sprak);
-          }
-        });
-        
-        return future.get(timeoutMinutes, TimeUnit.MINUTES);
-      } catch(Exception e) {
-        throw new RuntimeException(e);
-      }
+        @Override
+        public FsStudieinfo call() throws Exception {
+          return svc.fetchStudyPrograms(institusjonsnr, fakultetsnr != null ? fakultetsnr : -1, arstall, terminkode, medUPinfo, sprak);
+        }
+      });
+      
+      return future.get(timeoutMinutes, TimeUnit.MINUTES);
+    } catch(ExecutionException | InterruptedException | TimeoutException e) {
+      throw new RuntimeException(e);
     }
-    return null;
   }
 
   @Override
-  public FsStudieinfo getStudieprogram(int arstall, String terminkode,
-      boolean medUPinfo, String sprak,
-      String studieprogramkode)
+  public FsStudieinfo getStudieprogram(final int arstall, final String terminkode,
+      final boolean medUPinfo, final String sprak, final String studieprogramkode)
   {
-    // TODO Auto-generated method stub
-    return null;
+    final StudInfoImport svc = getServiceForPrincipal();
+    try {
+      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
+
+        @Override
+        public FsStudieinfo call() throws Exception {
+          return svc.fetchStudyProgram(studieprogramkode, arstall, terminkode, medUPinfo, sprak);
+        }
+      });
+      
+      return future.get(timeoutMinutes, TimeUnit.MINUTES);
+    } catch(ExecutionException | InterruptedException | TimeoutException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * @param arstall year
+   * @param terminkode semester code
+   * @param sprak language code
+   * @param institusjonsnr FS institution code
+   * @param fakultetsnr FS faculty code
+   * @param instituttnr ignored
+   * @param gruppenr ignored
+   */
+  @Override
+  public FsStudieinfo getEmneForOrgEnhet(final int arstall,
+      final String terminkode, final String sprak,
+      final int institusjonsnr, final Integer fakultetsnr,
+      final Integer instituttnr, final Integer gruppenr)
+  {
+    final StudInfoImport svc = getServiceForPrincipal();
+    try {
+      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
+
+        @Override
+        public FsStudieinfo call() throws Exception {
+          return svc.fetchSubjects(institusjonsnr, fakultetsnr, arstall, terminkode, sprak);
+        }
+      });
+      
+      return future.get(timeoutMinutes, TimeUnit.MINUTES);
+    } catch(ExecutionException | InterruptedException | TimeoutException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
-  public FsStudieinfo getEmneForOrgEnhet(int arstall,
-      String terminkode, String sprak,
-      int institusjonsnr, Integer fakultetsnr,
-      Integer instituttnr, Integer gruppenr)
+  public FsStudieinfo getEmne(final int arstall, final String terminkode,
+      final String sprak, final int institusjonsnr, final String emnekode, final String versjonskode)
   {
-    // TODO Auto-generated method stub
-    return null;
-  }
+    final StudInfoImport svc = getServiceForPrincipal();
+    try {
+      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
 
-  @Override
-  public FsStudieinfo getEmne(int arstall, String terminkode,
-      boolean medUPinfo, String sprak,
-      String emnekode, String versjonskode)
-  {
-    // TODO Auto-generated method stub
-    return null;
+        @Override
+        public FsStudieinfo call() throws Exception {
+          return svc.fetchSubject(institusjonsnr, emnekode, versjonskode, arstall, terminkode, sprak);
+        }
+      });
+      
+      return future.get(timeoutMinutes, TimeUnit.MINUTES);
+    } catch(ExecutionException | InterruptedException | TimeoutException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @PreDestroy
