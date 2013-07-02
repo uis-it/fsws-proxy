@@ -15,13 +15,13 @@
   </parent>
 
   <scm>
-    <url>http://forge.uis.no/projects/fsws-proxy/repository</url>
-    <connection>scm:git:git://forge.uis.no/fs-ws/fsws-proxy.git</connection>
-    <developerConnection>scm:git:ssh://git@forge.uis.no/fs-ws/fsws-proxy.git</developerConnection>
+    <url>https://github.com/uis-it/fsws-proxy</url>
+    <connection>scm:git:git://github.com/uis-it/fsws-proxy.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/uis-it/fsws-proxy.git</developerConnection>
   </scm>
   <issueManagement>
-    <system>ChiliProject</system>
-    <url>http://forge.uis.no/projects/fsws-proxy/issues</url>
+    <system>Github</system>
+    <url>https://github.com/uis-it/fsws-proxy/issues</url>
   </issueManagement>
   <inceptionYear>2013</inceptionYear>
   <ciManagement>
@@ -190,4 +190,5 @@
     </plugins>
   </build>
   
+  <url>https://github.com/uis-it/fsws-proxy</url>
 </project>
