@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <entry key="fs.ws.studinfo.url">https://fsws.usit.no/fsservices/studinfo</entry>
+  <!--entry key="fs.ws.connection.timeout">300000</entry-->
+  <!--entry key="fs.ws.receive.timeout">600000</entry-->
+  <!--entry key="ws.solr.faculties">6,7,8</entry-->
+</properties>

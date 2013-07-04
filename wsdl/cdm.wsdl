@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://fsws.usit.no/schemas/cdm" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CdmService" targetNamespace="http://fsws.usit.no/schemas/cdm">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://fsws.usit.no/schemas/cdm" elementFormDefault="unqualified" targetNamespace="http://fsws.usit.no/schemas/cdm" version="1.0">
+   <xs:element name="getStudieData" type="tns:getStudieData"/>
+   <xs:element name="getStudieDataResponse" type="tns:getStudieDataResponse"/>
+   <xs:complexType name="getStudieData">
+      <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name="getStudieDataResponse">
+      <xs:sequence>
+         <xs:element minOccurs="0" name="return" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>  </wsdl:types>
+  <wsdl:message name="getStudieDataResponse">
+    <wsdl:part element="tns:getStudieDataResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStudieData">
+    <wsdl:part element="tns:getStudieData" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CdmProxy">
+    <wsdl:operation name="getStudieData">
+      <wsdl:input message="tns:getStudieData" name="getStudieData">
+    </wsdl:input>
+      <wsdl:output message="tns:getStudieDataResponse" name="getStudieDataResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CdmServiceSoapBinding" type="tns:CdmProxy">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getStudieData">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getStudieData">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStudieDataResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CdmService">
+    <wsdl:port binding="tns:CdmServiceSoapBinding" name="CdmPort">
+      <soap:address location="http://localhost:8080/fsws-proxy/cdm"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -4,10 +4,13 @@
   <groupId>no.uis.fsws</groupId>
   <artifactId>fsws-proxy</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
   <name>Proxy for FS-WS</name>
-  <description>Simple CXF Java-first SOAP project using Spring configuration</description>
+  <description>Improved FS-WS</description>
+  <url>https://github.com/uis-it/fsws-proxy</url>
 
+  <inceptionYear>2013</inceptionYear>
+  
   <parent>
     <groupId>no.uis</groupId>
     <artifactId>parent-pom</artifactId>
@@ -23,7 +26,6 @@
     <system>Github</system>
     <url>https://github.com/uis-it/fsws-proxy/issues</url>
   </issueManagement>
-  <inceptionYear>2013</inceptionYear>
   <ciManagement>
     <system>Jenkins</system>
     <url>http://build01.uis.no/jenkins/job/ws-fsws-proxy</url>
@@ -35,6 +37,11 @@
     <junit.version>4.11</junit.version>
     <fsimport.version>3.0.0-SNAPSHOT</fsimport.version>
     <lombok.version>0.11.8</lombok.version>
+    <log4j.version>1.2.17</log4j.version>
+    <jaxb.version>2.2.6</jaxb.version>
+    <woodstox.version>4.2.0</woodstox.version>
+    <mimepull.version>1.6</mimepull.version>
+    <staxex.version>1.7.1</staxex.version>
   </properties>
   
   <dependencyManagement>
@@ -64,131 +71,76 @@
         <artifactId>studinfo-import</artifactId>
         <version>${fsimport.version}</version>
       </dependency>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>2.10.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>${jaxb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-xjc</artifactId>
+        <version>${jaxb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.woodstox</groupId>
+        <artifactId>woodstox-core-asl</artifactId>
+        <version>${woodstox.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvnet</groupId>
+        <artifactId>mimepull</artifactId>
+        <version>${mimepull.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvnet.staxex</groupId>
+        <artifactId>stax-ex</artifactId>
+        <version>${staxex.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-frontend-jaxws</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-transports-http</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>no.uis.fsws</groupId>
-      <artifactId>studinfo-import</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-
   <build>
     <pluginManagement>
       <plugins>
         <plugin>
-          <!-- mvn clean install tomcat:run-war to deploy Look for "Running 
-            war on http://xxx" and "Setting the server's publish address to be /yyy" 
-            in console output; WSDL browser address will be concatenation of the two: 
-            http://xxx/yyy?wsdl -->
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.1</version>
-          <executions>
-            <execution>
-              <id>start-tomcat</id>
-              <goals>
-                <goal>run-war</goal>
-              </goals>
-              <phase>pre-integration-test</phase>
-              <configuration>
-                <port>${test.server.port}</port>
-                <path>/webservice</path>
-                <fork>true</fork>
-                <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <configuration>
-            <projectNameTemplate>ws-[artifactId]</projectNameTemplate>
-            <wtpmanifest>true</wtpmanifest>
-            <wtpapplicationxml>true</wtpapplicationxml>
-            <wtpversion>2.0</wtpversion>
-          </configuration>
+          <groupId>org.apache.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.4.1</version>
         </plugin>
       </plugins>
     </pluginManagement>
+    
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
+        <groupId>org.apache.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
         <configuration>
-          <webResources>
-            <resource>
-              <directory>src/main/webapp</directory>
-              <filtering>true</filtering>
-              <includes>
-                <include>version.txt</include>
-                <include>WEB-INF/web.xml</include>
-              </includes>
-            </resource>
-            <resource>
-              <directory>src/main/webapp</directory>
-              <filtering>false</filtering>
-              <excludes>
-                <exclude>version.txt</exclude>
-                <exclude>WEB-INF/web.xml</exclude>
-              </excludes>
-            </resource>
-          </webResources>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <commitByProject>true</commitByProject>
+          <preparationGoals>clean install</preparationGoals>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>pl.project13.maven</groupId>
-        <artifactId>git-commit-id-plugin</artifactId>
-        <version>2.1.4</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.10</version>
-        <configuration>
-          <configLocation>checkstyle/checkstyle.xml</configLocation>
-          <propertyExpansion>basedir=${basedir}</propertyExpansion>
-          <suppressionsLocation>checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
-          <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-        </configuration>
-      </plugin>
+      </plugin>      
     </plugins>
   </build>
   
-  <url>https://github.com/uis-it/fsws-proxy</url>
+  <modules>
+    <module>wsdl</module>
+    <module>server</module>
+    <!--module>client</module-->
+  </modules>
 </project>
