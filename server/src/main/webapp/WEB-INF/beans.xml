@@ -78,7 +78,7 @@
     <property name="fswsAddress" value="${fs.ws.studinfo.url}"/>
     <property name="transformerUrls">
       <map>
-        <entry key="uis" value="classpath:fspreprocess-stable.xsl"/>
+        <entry key="uis" value="classpath:fspreprocess-uis.xsl"/>
       </map>
     </property>
     <property name="xmlSourceParser" value="no.uis.fsws.studinfo.impl.SkippingAmpersandParser"/>
