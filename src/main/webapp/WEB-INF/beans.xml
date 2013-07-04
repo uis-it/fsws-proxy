@@ -4,7 +4,6 @@
   xmlns:jaxws="http://cxf.apache.org/jaxws"
   xmlns:cxf="http://cxf.apache.org/core"
   xmlns:context="http://www.springframework.org/schema/context"  
-  xmlns:ns="http://proxy.fsws.uis.no"
   xsi:schemaLocation="
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
     http://cxf.apache.org/core  http://cxf.apache.org/schemas/core.xsd
@@ -22,11 +21,12 @@
     class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" /-->
 
   <jaxws:endpoint
+    xmlns:studinfo="http://fsws.usit.no/schemas/studinfo"
     id="studinfoProxyService"
     implementor="#studinfoProxy"
     address="/studinfo"
-    serviceName="ns:StudinfoService" 
-    endpointName="ns:StudinfoPort"
+    serviceName="studinfo:StudinfoService" 
+    endpointName="studinfo:StudinfoPort"
   >
     <jaxws:inInterceptors>
       <ref bean="authorizationInterceptor"/>
@@ -36,12 +36,13 @@
     </jaxws:properties>
   </jaxws:endpoint>
 
-  <jaxws:endpoint 
+  <jaxws:endpoint
+    xmlns:cdm="http://fsws.usit.no/schemas/cdm"
     id="cdmProxyService" 
     implementor="#cdmProxy"
     address="/cdm" 
-    serviceName="ns:CdmService" 
-    endpointName="ns:CdmPort"
+    serviceName="cdm:CdmService" 
+    endpointName="cdm:CdmPort"
   >
     <jaxws:inInterceptors>
       <ref bean="authorizationInterceptor"/>

@@ -26,7 +26,7 @@ import no.uis.fsws.studinfo.data.FsStudieinfo;
  * @see https://www.fellesstudentsystem.no/dokumentasjon/teknisk/fsws-dok/studinfo/index.html
  * 
  */
-@WebService
+@WebService(targetNamespace = "http://fsws.usit.no/schemas/studinfo")
 public interface StudinfoProxy {
   //  CHECKSTYLE:OFF
 

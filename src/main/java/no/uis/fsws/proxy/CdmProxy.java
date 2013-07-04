@@ -23,7 +23,7 @@ import javax.jws.WebService;
  * @author 2904630
  *
  */
-@WebService
+@WebService(targetNamespace = "http://fsws.usit.no/schemas/cdm")
 public interface CdmProxy {
   String getStudieData();
 }
