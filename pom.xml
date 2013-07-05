@@ -321,12 +321,12 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>${basedir}/src/wsdl/studinfo.wsdl</file>
+                  <file>${basedir}/src/main/wsdl/studinfo.wsdl</file>
                   <type>wsdl</type>
                   <classifier>studinfo</classifier>
                 </artifact>
                 <artifact>
-                  <file>${basedir}/src/wsdl/cdm.wsdl</file>
+                  <file>${basedir}/src/main/wsdl/cdm.wsdl</file>
                   <type>wsdl</type>
                   <classifier>cdm</classifier>
                 </artifact>
