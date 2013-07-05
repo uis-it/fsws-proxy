@@ -1,966 +1,194 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://fsws.usit.no/schemas/studinfo" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="StudinfoService" targetNamespace="http://fsws.usit.no/schemas/studinfo">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:studinfo="http://fsws.usit.no/schemas/studinfo" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fsws.usit.no/schemas/studinfo">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://fsws.usit.no/schemas/studinfo" elementFormDefault="unqualified" targetNamespace="http://fsws.usit.no/schemas/studinfo" version="1.0">
-   <xs:element name="fs-studieinfo">
-      <xs:complexType>
-         <xs:sequence>
-            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="studieprogram" nillable="true" type="tns:Studieprogram"/>
-            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="kurs" nillable="true" type="tns:Kurs"/>
-            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" nillable="true" type="tns:Emne"/>
-         </xs:sequence>
-      </xs:complexType>
-   </xs:element>
-   <xs:element name="getEmne" type="tns:getEmne"/>
-   <xs:element name="getEmneForOrgEnhet" type="tns:getEmneForOrgEnhet"/>
-   <xs:element name="getEmneForOrgEnhetResponse" type="tns:getEmneForOrgEnhetResponse"/>
-   <xs:element name="getEmneResponse" type="tns:getEmneResponse"/>
-   <xs:element name="getStudieprogram" type="tns:getStudieprogram"/>
-   <xs:element name="getStudieprogramForOrgenhet" type="tns:getStudieprogramForOrgenhet"/>
-   <xs:element name="getStudieprogramForOrgenhetResponse" type="tns:getStudieprogramForOrgenhetResponse"/>
-   <xs:element name="getStudieprogramResponse" type="tns:getStudieprogramResponse"/>
-   <xs:complexType name="getStudieprogramForOrgenhet">
-      <xs:sequence>
-         <xs:element name="arstall" type="xs:int"/>
-         <xs:element name="terminkode" type="xs:string"/>
-         <xs:element name="sprak" type="xs:string"/>
-         <xs:element name="institusjonsnr" type="xs:int"/>
-         <xs:element minOccurs="0" name="fakultetsnr" type="xs:int"/>
-         <xs:element minOccurs="0" name="instituttnr" type="xs:int"/>
-         <xs:element minOccurs="0" name="gruppenr" type="xs:int"/>
-         <xs:element name="medUPinfo" type="xs:boolean"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="getStudieprogramForOrgenhetResponse">
-      <xs:sequence>
-         <xs:element minOccurs="0" name="return">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="studieprogram" nillable="true" type="tns:Studieprogram"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="kurs" nillable="true" type="tns:Kurs"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" nillable="true" type="tns:Emne"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Studieprogram">
-      <xs:complexContent>
-         <xs:extension base="tns:FsType">
-            <xs:sequence>
-               <xs:element form="qualified" name="studieprogramkode" type="xs:string"/>
-               <xs:element form="qualified" name="studieprogramnavn" type="xs:string"/>
-               <xs:element form="qualified" name="studieprogramnavn_vitn" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="studieprogramnavn_en" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="studieprogramnavn_vitn_en" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="studiepoeng" type="xs:integer"/>
-               <xs:element form="qualified" name="studieniva" type="xs:string"/>
-               <xs:element form="qualified" name="studienivakode" type="xs:integer"/>
-               <xs:element form="qualified" name="studienivanavn" type="xs:string"/>
-               <xs:element form="qualified" name="fagansvarlig" nillable="true" type="tns:Sted"/>
-               <xs:element form="qualified" name="adminansvarlig" nillable="true" type="tns:Sted"/>
-               <xs:element form="qualified" name="gradnavn" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="nuskode" type="xs:string"/>
-               <xs:element form="qualified" name="url" nillable="true" type="xs:anyURI"/>
-               <xs:element form="qualified" name="finansieringsprosent" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="heltidsprosent" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="varighet" nillable="true" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="grunnstudium" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="kulltrinnplan" type="xs:string"/>
-               <xs:element form="qualified" name="arbeidsformer" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="fagplan_tekst" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="fagplan_URL" nillable="true" type="xs:anyURI"/>
-               <xs:element form="qualified" name="innhold" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="intro" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="kontaktinformasjon" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="kvalifik_og_jobbmuligheter" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="laringsutbytte" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="litteratur" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="opptaksinformasjon" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="opptakskrav" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="p-formkrav" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="p-innhold" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="p-kortintr" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="p-profkval" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="p-studkval" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="se-introd" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="rammeplan_tekst" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="rammeplan_URL" nillable="true" type="xs:anyURI"/>
-               <xs:element form="qualified" name="studentevaluering" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="utenlandsopphold" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="vurdering_tilleggstekst" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="opptak-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="opptak" type="tns:Opptak"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="fagkode" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="sprak-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="sprak" type="tns:Sprak"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="utdanningsplan" nillable="true" type="tns:Utdanningsplan"/>
-               <xs:element form="qualified" name="planforslag" nillable="true" type="tns:Planforslag"/>
-               <xs:element form="qualified" name="termin-siste-opptak" nillable="true" type="xs:string"/>
-               <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-            </xs:sequence>
-         </xs:extension>
-      </xs:complexContent>
-   </xs:complexType>
-   <xs:complexType abstract="true" name="FsType">
-      <xs:sequence/>
-      <xs:attribute name="sprak" type="xs:string"/>
-   </xs:complexType>
-   <xs:complexType name="Sted">
-      <xs:sequence>
-         <xs:element form="qualified" name="institusjonsnr" type="xs:integer"/>
-         <xs:element form="qualified" name="fakultetsnr" type="xs:integer"/>
-         <xs:element form="qualified" name="instituttnr" type="xs:integer"/>
-         <xs:element form="qualified" name="gruppenr" type="xs:integer"/>
-         <xs:element form="qualified" name="navn" type="xs:string"/>
-         <xs:element form="qualified" name="avdnavn" type="xs:string"/>
-         <xs:element form="qualified" name="url" nillable="true" type="xs:anyURI"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Sprak">
-      <xs:sequence>
-         <xs:element form="qualified" name="sprakkode" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="undervisning" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="vurdering" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="eksamen" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Emneid">
-      <xs:sequence>
-         <xs:element form="qualified" name="institusjonsnr" type="xs:integer"/>
-         <xs:element form="qualified" name="emnekode" type="xs:string"/>
-         <xs:element form="qualified" name="versjonskode" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Emne">
-      <xs:complexContent>
-         <xs:extension base="tns:BasisEmne">
-            <xs:sequence>
-               <xs:element form="qualified" name="emnenavn_en" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="studiepoeng" nillable="true" type="xs:integer"/>
-               <xs:element default="N" form="qualified" name="status-privatist" type="xs:string"/>
-               <xs:element form="qualified" name="studieniva" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="nuskode" nillable="true" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="enkeltemneopptak" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="studierettkrav" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="status_oblig" type="xs:string"/>
-               <xs:element form="qualified" name="obligund">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="obligoppgave" type="tns:Obligoppgave"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="undervisningssemester" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="antall-undsemester" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="antall-forelesningstimer" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="antall-selvstudiumtimer" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="undsemester-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="undsemester" type="tns:Undsemester"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="emnetype" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="url" nillable="true" type="xs:anyURI"/>
-               <xs:element form="qualified" name="periode-eks" nillable="true" type="tns:Semesterperiode"/>
-               <xs:element form="qualified" name="periode-und" nillable="true" type="tns:Semesterperiode"/>
-               <xs:element form="qualified" name="eksamenssemester" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="anbefalte-forkunnskaper" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="formelle-forkunnskaper">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="kravalternativ" type="tns:Kravalternativ"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="inngar-i-studieprogram-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="inngar-i-studieprogram" type="tns:Inngar-i-studieprogram"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="inngar-i-fag-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="inngar-i-fag" type="tns:Inngar-i-fag"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="fagansvarlig" nillable="true" type="tns:Sted"/>
-               <xs:element form="qualified" name="adminansvarlig" nillable="true" type="tns:Sted"/>
-               <xs:element form="qualified" name="sprak-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="sprak" type="tns:Sprak"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="fagperson-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="fagperson" type="tns:Fagperson"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="dato-eksamen" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="eksamensordning-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="eksamensordning" type="tns:Eksamensordning"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="vurdordning-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="vurdordning" type="tns:Vurdordning"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="vektingsreduksjon">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="redregel" type="tns:Redregel"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="abs_forkunnskaper_fritekst" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="anb_forkunnskaper_fritekst" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="arbeidsformer" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="innhold" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="intro" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="kortsam" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="kvalifik_og_jobbmuligheter" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="litteratur" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="laringsutbytte" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="oblig_undakt_tilleggsinfo" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="opptakskrav" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="praksis" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="studentevaluering" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="vurdering_tilleggstekst" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="apent_for_tillegg" nillable="true" type="xs:string"/>
-               <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-            </xs:sequence>
-         </xs:extension>
-      </xs:complexContent>
-   </xs:complexType>
-   <xs:complexType name="BasisEmne">
-      <xs:complexContent>
-         <xs:extension base="tns:FsType">
-            <xs:sequence>
-               <xs:element form="qualified" name="emneid" type="tns:Emneid"/>
-               <xs:element form="qualified" name="emnenavn" type="xs:string"/>
-            </xs:sequence>
-         </xs:extension>
-      </xs:complexContent>
-   </xs:complexType>
-   <xs:complexType name="Obligoppgave">
-      <xs:simpleContent>
-         <xs:extension base="xs:string">
-            <xs:attribute name="nr" type="xs:anySimpleType" use="required"/>
-         </xs:extension>
-      </xs:simpleContent>
-   </xs:complexType>
-   <xs:complexType name="Undsemester">
-      <xs:sequence>
-         <xs:element form="qualified" name="semester-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="semester" type="tns:Semester"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="forstegang" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="sistegang" nillable="true" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Semester">
-      <xs:simpleContent>
-         <xs:extension base="xs:string">
-            <xs:attribute name="nr" type="xs:integer" use="required"/>
-         </xs:extension>
-      </xs:simpleContent>
-   </xs:complexType>
-   <xs:complexType name="Semesterperiode">
-      <xs:sequence>
-         <xs:element form="qualified" name="forstegang" type="xs:string"/>
-         <xs:element form="qualified" name="sistegang" nillable="true" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Kravalternativ">
-      <xs:simpleContent>
-         <xs:extension base="xs:string">
-            <xs:attribute name="kravnr" type="xs:integer" use="required"/>
-         </xs:extension>
-      </xs:simpleContent>
-   </xs:complexType>
-   <xs:complexType name="Inngar-i-studieprogram">
-      <xs:sequence>
-         <xs:element form="qualified" name="studieprogramkode" type="xs:string"/>
-         <xs:element form="qualified" name="studieprogramnavn" nillable="true" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Inngar-i-fag">
-      <xs:sequence>
-         <xs:element form="qualified" name="fagkode" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Fagperson">
-      <xs:sequence>
-         <xs:element form="qualified" name="personid" type="xs:integer"/>
-         <xs:element form="qualified" name="fnr" type="xs:string"/>
-         <xs:element form="qualified" name="personrolle" type="xs:string"/>
-         <xs:element form="qualified" name="personnavn" type="tns:Personnavn"/>
-         <xs:element form="qualified" name="dato-fra" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="dato-til" nillable="true" type="xs:date"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Personnavn">
-      <xs:sequence>
-         <xs:element form="qualified" name="etternavn" type="xs:string"/>
-         <xs:element form="qualified" name="fornavn" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Eksamensordning">
-      <xs:sequence>
-         <xs:element form="qualified" name="eksamensordningid" type="xs:string"/>
-         <xs:element form="qualified" name="eksamensordningnavn" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="default" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="meld_studentweb" type="xs:string"/>
-         <xs:element form="qualified" name="hjelpemiddel-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="hjelpemiddel" type="tns:Hjelpemiddel"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="karregel" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="dato-eksamen" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="eksamensdel-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="eksamensdel" type="tns:Eksamensdel"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Hjelpemiddel">
-      <xs:sequence>
-         <xs:element form="qualified" name="hjelpemiddelnavn" type="xs:string"/>
-         <xs:element form="qualified" name="hjelpemiddelmerknad" nillable="true" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Eksamensdel">
-      <xs:sequence>
-         <xs:element form="qualified" name="eksamensdelnr" type="xs:integer"/>
-         <xs:element form="qualified" name="eksamensdelnavn" type="xs:string"/>
-         <xs:element form="qualified" name="studiepoeng-reduksjon" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="varighet" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="eksamensform" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="karaktervekt" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="karregel" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="eksamensdag-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="eksamensdag" type="tns:Eksamensdag"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="dato-eksamen" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="lovlig-hjelpemiddel-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="lovlig-hjelpemiddel" type="xs:string"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Eksamensdag">
-      <xs:sequence>
-         <xs:element form="qualified" name="eksamensdagnr" type="xs:integer"/>
-         <xs:element form="qualified" name="studiepoeng-reduksjon" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="varighet-timer" nillable="true" type="xs:double"/>
-         <xs:element form="qualified" name="lovlig-hjelpemiddel" nillable="true" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Vurdordning">
-      <xs:sequence>
-         <xs:element form="qualified" name="vurdordningid" type="xs:string"/>
-         <xs:element form="qualified" name="vurdordningnavn" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="default" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="meld_studentweb" type="xs:string"/>
-         <xs:element form="qualified" name="vurdkombinasjon" nillable="true" type="tns:Vurdkombinasjon"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Vurdkombinasjon">
-      <xs:sequence>
-         <xs:element form="qualified" name="vurdkombkode" type="xs:string"/>
-         <xs:element form="qualified" name="vurdkombnavn" type="xs:string"/>
-         <xs:element form="qualified" name="vurdform" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="vurdkombtype" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="forstegang" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="sistegang" nillable="true" type="xs:string"/>
-         <xs:element default="1/1" form="qualified" name="brok" type="xs:string"/>
-         <xs:element form="qualified" name="varighet" nillable="true" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="vurdering" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="alle-kandidater" type="xs:string"/>
-         <xs:element form="qualified" name="karregelkode" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="karregel" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="vurdkombtider">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="vurdkombtid" type="tns:Vurdkombtid"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="hjelpemiddel-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="hjelpemiddel" type="tns:Hjelpemiddel"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="tid" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="tid-reell" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="vurdstatus" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="dato-uttak" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="klokkeslett-uttak" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="dato-innlevering" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="klokkeslett-innlevering" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="dato-eksamen" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="klokkeslett-eksamen-fremmotetid" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="vurdenheter">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="vurdenhet" type="tns:Vurdenhet"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="vurdkombinasjon-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="vurdkombinasjon" type="tns:Vurdkombinasjon"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-      <xs:attribute name="niva" type="xs:integer" use="required"/>
-   </xs:complexType>
-   <xs:complexType name="Vurdkombtid">
-      <xs:sequence>
-         <xs:element form="qualified" name="vurdtidkode" type="xs:string"/>
-         <xs:element form="qualified" name="vurdtidkode_reell" type="xs:string"/>
-         <xs:element form="qualified" name="arsinkrement" type="xs:integer"/>
-         <xs:element form="qualified" name="vurdstatuskode" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="liketallsaar" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="oddetallsaar" type="xs:string"/>
-         <xs:element form="qualified" name="forstegang" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="sistegang" nillable="true" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Vurdenhet">
-      <xs:sequence>
-         <xs:element form="qualified" name="tid" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="tid-reell" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="vurdstatus" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="dato-eksamen" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="klokkeslett-eksamen-fremmotetid" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="dato-uttak" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="klokkeslett-uttak" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="dato-innlevering" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="klokkeslett-innlevering" nillable="true" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Redregel">
-      <xs:sequence>
-         <xs:element form="qualified" name="studiepoeng-reduksjon" type="xs:decimal"/>
-         <xs:element form="qualified" name="periode" type="tns:Datoperiode"/>
-         <xs:element form="qualified" name="redregel-emne-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" type="tns:BasisEmne"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Datoperiode">
-      <xs:sequence>
-         <xs:element form="qualified" name="fradato" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="tildato" nillable="true" type="xs:date"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Kurs">
-      <xs:complexContent>
-         <xs:extension base="tns:FsType">
-            <xs:sequence>
-               <xs:element form="qualified" name="kursid" type="tns:Kursid"/>
-               <xs:element form="qualified" name="kursnavn" type="xs:string"/>
-               <xs:element form="qualified" name="fagansvarlig" nillable="true" type="tns:Sted"/>
-               <xs:element form="qualified" name="adminansvarlig" nillable="true" type="tns:Sted"/>
-               <xs:element form="qualified" name="dato-fra" nillable="true" type="xs:date"/>
-               <xs:element form="qualified" name="dato-til" nillable="true" type="xs:date"/>
-               <xs:element form="qualified" name="dato-opptak-fra" nillable="true" type="xs:date"/>
-               <xs:element form="qualified" name="dato-opptak-til" nillable="true" type="xs:date"/>
-               <xs:element form="qualified" name="dato-frist-soknad" nillable="true" type="xs:date"/>
-               <xs:element form="qualified" name="url" nillable="true" type="xs:anyURI"/>
-               <xs:element form="qualified" name="varighettimer" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="email" nillable="true" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="fjernundervisning" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="desentral-undervisning" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="nettbasert-undervisning" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="kan-tilbys" type="xs:string"/>
-               <xs:element default="N" form="qualified" name="skal-avholdes" type="xs:string"/>
-               <xs:element form="qualified" name="kostnadkommentar" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="kurskategori-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="kurskategori" type="tns:Kurskategori"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="dato-publiseres-fra" nillable="true" type="xs:date"/>
-               <xs:element form="qualified" name="dato-publiseres-til" nillable="true" type="xs:date"/>
-               <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-            </xs:sequence>
-         </xs:extension>
-      </xs:complexContent>
-   </xs:complexType>
-   <xs:complexType name="Kursid">
-      <xs:sequence>
-         <xs:element form="qualified" name="kurskode" type="xs:string"/>
-         <xs:element form="qualified" name="tidkode" type="xs:NMTOKEN"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Kurskategori">
-      <xs:sequence>
-         <xs:element form="qualified" name="kurskategorikode" type="xs:string"/>
-         <xs:element form="qualified" name="kurskategorinavn" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="PlanEmne">
-      <xs:complexContent>
-         <xs:extension base="tns:BasisEmne">
-            <xs:sequence>
-               <xs:element form="qualified" name="undtermin" nillable="true" type="xs:integer"/>
-               <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-            </xs:sequence>
-         </xs:extension>
-      </xs:complexContent>
-   </xs:complexType>
-   <xs:complexType name="ProgramEmne">
-      <xs:complexContent>
-         <xs:extension base="tns:BasisEmne">
-            <xs:sequence>
-               <xs:element form="qualified" name="studiepoeng" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="undervisningstermin-liste">
-                  <xs:complexType>
-                     <xs:sequence>
-                        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="undervisningstermin" type="tns:Undervisningstermin"/>
-                     </xs:sequence>
-                  </xs:complexType>
-               </xs:element>
-               <xs:element form="qualified" name="sorteringsrekkefolge" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="valgstatus" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="valgstatusnavn" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="valgstatusbeskrivelse" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="valgstatusbeskrivelse-en" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="undtermin-fra" type="xs:integer"/>
-               <xs:element form="qualified" name="undtermin-til" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="undtermin-default" nillable="true" type="xs:integer"/>
-               <xs:element form="qualified" name="termin-start-fra" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="termin-start-til" nillable="true" type="xs:string"/>
-               <xs:element form="qualified" name="termin-valg-til" nillable="true" type="xs:string"/>
-               <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-            </xs:sequence>
-         </xs:extension>
-      </xs:complexContent>
-   </xs:complexType>
-   <xs:complexType name="Undervisningstermin">
-      <xs:sequence>
-         <xs:element form="qualified" name="termin-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="termin" type="tns:Termin"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-      <xs:attribute name="start" type="xs:string" use="required"/>
-   </xs:complexType>
-   <xs:complexType name="Termin">
-      <xs:sequence>
-         <xs:element form="qualified" name="terminnr" type="xs:integer"/>
-         <xs:element form="qualified" name="terminnavn" type="xs:string"/>
-         <xs:element form="qualified" name="studiepoeng" nillable="true" type="xs:integer"/>
-         <xs:element default="N" form="qualified" name="generer_und" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Opptak">
-      <xs:sequence>
-         <xs:element form="qualified" name="opptakstype" type="xs:string"/>
-         <xs:element form="qualified" name="opptakskode" type="xs:string"/>
-         <xs:element form="qualified" name="frist_soknad" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="frist_ettersending" nillable="true" type="xs:date"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Emnekombinasjon-frievalg">
-      <xs:sequence>
-         <xs:element form="qualified" name="lopenr" type="xs:integer"/>
-         <xs:element form="qualified" name="institusjonsnr" type="xs:integer"/>
-         <xs:element form="qualified" name="fakultetsnr" type="xs:integer"/>
-         <xs:element form="qualified" name="instituttnr" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="gruppenr" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="studienivakode-fra" type="xs:integer"/>
-         <xs:element form="qualified" name="studienivakode-til" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="studierettkrav" type="xs:string"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Emnekombinasjon-valg">
-      <xs:sequence>
-         <xs:element form="qualified" name="studieprogramkode" type="xs:string"/>
-         <xs:element form="qualified" name="arstall-kull" type="xs:integer"/>
-         <xs:element form="qualified" name="terminkode-kull" type="xs:string"/>
-         <xs:element form="qualified" name="dato-start" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="dato-frist" nillable="true" type="xs:date"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Planinformasjon">
-      <xs:sequence>
-         <xs:element form="qualified" name="dato-gjelder-fra" type="xs:date"/>
-         <xs:element form="qualified" name="dato-gjelder-til" nillable="true" type="xs:date"/>
-         <xs:element form="qualified" name="infotekst" type="xs:string"/>
-         <xs:element form="qualified" name="url" nillable="true" type="xs:anyURI"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Planelement">
-      <xs:sequence>
-         <xs:element form="qualified" name="planelementkode" type="xs:string"/>
-         <xs:element form="qualified" name="planelementnavn" type="xs:string"/>
-         <xs:element form="qualified" name="planelementnavn-en" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="sorteringsrekkefolge" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="valgstatus" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="undtermin-fra" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="undtermin-til" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="url" nillable="true" type="xs:anyURI"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Utdanningsplan">
-      <xs:sequence>
-         <xs:element form="qualified" name="planinformasjon-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="planinformasjon" type="tns:Planinformasjon"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="krav-sammensetting-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="krav-sammensetting" type="tns:Krav-sammensetting"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Krav-sammensetting">
-      <xs:sequence>
-         <xs:element form="qualified" name="termin-gjelder-fra" type="xs:string"/>
-         <xs:element form="qualified" name="arstall-gjelder-fra" nillable="true" type="xs:gYear"/>
-         <xs:element form="qualified" name="terminkode-gjelder-fra" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="emnekombinasjon" type="tns:Emnekombinasjon"/>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="Emnekombinasjon">
-      <xs:sequence>
-         <xs:element form="qualified" name="emnekombinasjonskode" type="xs:string"/>
-         <xs:element form="qualified" name="emnekombinasjonsnavn" type="xs:string"/>
-         <xs:element form="qualified" name="beskrivelse" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="studieretning" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="studiepoeng-krav" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="terminnr-relativ-start" nillable="true" type="xs:integer"/>
-         <xs:element form="qualified" name="termin-start-fra" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="termin-start-til" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="fargekode" nillable="true" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="veivalg" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="valg-alle-emner" type="xs:string"/>
-         <xs:element default="N" form="qualified" name="opptak" type="xs:string"/>
-         <xs:element form="qualified" name="emne-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" type="tns:ProgramEmne"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="planelement-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="planelement" type="tns:Planelement"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="emnekombinasjon-valg-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emnekombinasjon-valg" type="tns:Emnekombinasjon-valg"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="emnekombinasjon-frievalg-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emnekombinasjon-frievalg" type="tns:Emnekombinasjon-frievalg"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:element form="qualified" name="emnekombinasjon-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emnekombinasjon" type="tns:Emnekombinasjon"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-      <xs:attribute name="niva" type="xs:integer" use="required"/>
-   </xs:complexType>
-   <xs:complexType name="Planforslag">
-      <xs:sequence>
-         <xs:element form="qualified" name="beskrivelse" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="emnekombinasjonsnavn" type="xs:string"/>
-         <xs:element form="qualified" name="termin-start" nillable="true" type="xs:string"/>
-         <xs:element form="qualified" name="planemne-liste">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" type="tns:PlanEmne"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-         <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="fsEksamensdato">
-      <xs:sequence/>
-   </xs:complexType>
-   <xs:complexType name="getStudieprogram">
-      <xs:sequence>
-         <xs:element name="arstall" type="xs:int"/>
-         <xs:element name="terminkode" type="xs:string"/>
-         <xs:element name="medUPinfo" type="xs:boolean"/>
-         <xs:element name="sprak" type="xs:string"/>
-         <xs:element name="studieprogramkode" type="xs:string"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="getStudieprogramResponse">
-      <xs:sequence>
-         <xs:element minOccurs="0" name="return">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="studieprogram" nillable="true" type="tns:Studieprogram"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="kurs" nillable="true" type="tns:Kurs"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" nillable="true" type="tns:Emne"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="getEmneForOrgEnhet">
-      <xs:sequence>
-         <xs:element name="arstall" type="xs:int"/>
-         <xs:element name="terminkode" type="xs:string"/>
-         <xs:element name="sprak" type="xs:string"/>
-         <xs:element name="institusjonsnr" type="xs:int"/>
-         <xs:element minOccurs="0" name="fakultetsnr" type="xs:int"/>
-         <xs:element minOccurs="0" name="instituttnr" type="xs:int"/>
-         <xs:element minOccurs="0" name="gruppenr" type="xs:int"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="getEmneForOrgEnhetResponse">
-      <xs:sequence>
-         <xs:element minOccurs="0" name="return">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="studieprogram" nillable="true" type="tns:Studieprogram"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="kurs" nillable="true" type="tns:Kurs"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" nillable="true" type="tns:Emne"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="getEmne">
-      <xs:sequence>
-         <xs:element name="arstall" type="xs:int"/>
-         <xs:element name="terminkode" type="xs:string"/>
-         <xs:element name="sprak" type="xs:string"/>
-         <xs:element name="institusjonsnr" type="xs:int"/>
-         <xs:element name="emnekode" type="xs:string"/>
-         <xs:element name="versjonskode" type="xs:string"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="getEmneResponse">
-      <xs:sequence>
-         <xs:element minOccurs="0" name="return">
-            <xs:complexType>
-               <xs:sequence>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="studieprogram" nillable="true" type="tns:Studieprogram"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="kurs" nillable="true" type="tns:Kurs"/>
-                  <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="emne" nillable="true" type="tns:Emne"/>
-               </xs:sequence>
-            </xs:complexType>
-         </xs:element>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:simpleType name="FsSemester">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="VAR"/>
-         <xs:enumeration value="HOST"/>
-      </xs:restriction>
-   </xs:simpleType>
-</xs:schema>  </wsdl:types>
-  <wsdl:message name="getStudieprogramForOrgenhet">
-    <wsdl:part element="tns:getStudieprogramForOrgenhet" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getEmne">
-    <wsdl:part element="tns:getEmne" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getEmneForOrgEnhet">
-    <wsdl:part element="tns:getEmneForOrgEnhet" name="parameters">
-    </wsdl:part>
+    <!--xsd:include schemaLocation="types.xml"/-->
+    <xsd:schema targetNamespace="http://fsws.usit.no/schemas/studinfo">
+      <xsd:include schemaLocation="studinfo.xsd"/>
+      <xsd:element name="getEmne">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="arstall" type="xsd:gYear" />
+            <xsd:element name="terminkode" type="studinfo:Terminkode" />
+            <xsd:element name="sprak" type="studinfo:Sprakkode" />
+            <xsd:element name="institusjonsnr" type="xsd:int" />
+            <xsd:element name="emnekode" type="xsd:string" />
+            <xsd:element name="versjonskode" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getEmneResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="studinfo:Emne"
+              minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getEmnerForOrgenhet">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="arstall" type="xsd:gYear" />
+            <xsd:element name="terminkode" type="studinfo:Terminkode" />
+            <xsd:element name="sprak" type="studinfo:Sprakkode" />
+            <xsd:element name="institusjonsnr" type="xsd:int" />
+            <xsd:element name="fakultetsnr" type="xsd:int"
+              minOccurs="0" />
+            <xsd:element name="instituttnr" type="xsd:int"
+              minOccurs="0" />
+            <xsd:element name="gruppenr" type="xsd:int"
+              minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getEmnerForOrgenhetResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="studinfo:Emne"
+              minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStudieprogram">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="arstall" type="xsd:gYear" />
+            <xsd:element name="terminkode" type="studinfo:Terminkode" />
+            <xsd:element name="sprak" type="studinfo:Sprakkode" />
+            <xsd:element name="medUPinfo" type="xsd:boolean" />
+            <xsd:element name="studieprogramkode" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStudieprogramResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="studinfo:Studieprogram"
+              minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStudieprogrammerForOrgenhet">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="arstall" type="xsd:gYear" />
+            <xsd:element name="terminkode" type="studinfo:Terminkode" />
+            <xsd:element name="sprak" type="studinfo:Sprakkode" />
+            <xsd:element name="institusjonsnr" type="xsd:int" />
+            <xsd:element name="fakultetsnr" type="xsd:int"
+              minOccurs="0" />
+            <xsd:element name="instituttnr" type="xsd:int"
+              minOccurs="0" />
+            <xsd:element name="gruppenr" type="xsd:int"
+              minOccurs="0" />
+            <xsd:element name="medUPinfo" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStudieprogrammerForOrgenhetResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="studinfo:Studieprogram"
+              minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getKurs">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="arstall" type="xsd:gYear" />
+            <xsd:element name="terminkode" type="studinfo:Terminkode" />
+            <xsd:element name="sprak" type="studinfo:Sprakkode" />
+            <xsd:element name="institusjonsnr" type="xsd:int" />
+            <xsd:element name="fakultetsnr" type="xsd:int"
+              minOccurs="0" />
+            <xsd:element name="instituttnr" type="xsd:int"
+              minOccurs="0" />
+            <xsd:element name="gruppenr" type="xsd:int"
+              minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getKursResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="studinfo:Kurs"
+              minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getEmneRequest">
+    <wsdl:part element="studinfo:getEmne" name="parameters" />
   </wsdl:message>
   <wsdl:message name="getEmneResponse">
-    <wsdl:part element="tns:getEmneResponse" name="parameters">
-    </wsdl:part>
+    <wsdl:part element="studinfo:getEmneResponse" name="parameters" />
   </wsdl:message>
-  <wsdl:message name="getStudieprogramForOrgenhetResponse">
-    <wsdl:part element="tns:getStudieprogramForOrgenhetResponse" name="parameters">
-    </wsdl:part>
+  <wsdl:message name="getEmnerForOrgenhetRequest">
+    <wsdl:part name="parameters" element="studinfo:getEmnerForOrgenhet"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEmnerForOrgenhetResponse">
+    <wsdl:part name="parameters" element="studinfo:getEmnerForOrgenhetResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStudieprogramRequest">
+    <wsdl:part name="parameters" element="studinfo:getStudieprogram"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="getStudieprogramResponse">
-    <wsdl:part element="tns:getStudieprogramResponse" name="parameters">
-    </wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getStudieprogramResponse"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getStudieprogram">
-    <wsdl:part element="tns:getStudieprogram" name="parameters">
-    </wsdl:part>
+  <wsdl:message name="getStudieprogrammerForOrgenhetRequest">
+    <wsdl:part name="parameters" element="studinfo:getStudieprogrammerForOrgenhet"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getEmneForOrgEnhetResponse">
-    <wsdl:part element="tns:getEmneForOrgEnhetResponse" name="parameters">
-    </wsdl:part>
+  <wsdl:message name="getStudieprogrammerForOrgenhetResponse">
+    <wsdl:part name="parameters"
+      element="studinfo:getStudieprogrammerForOrgenhetResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getKursRequest">
+    <wsdl:part name="parameters" element="studinfo:getKurs"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getKursResponse">
+    <wsdl:part name="parameters" element="studinfo:getKursResponse"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="StudinfoProxy">
-    <wsdl:operation name="getStudieprogramForOrgenhet">
-      <wsdl:input message="tns:getStudieprogramForOrgenhet" name="getStudieprogramForOrgenhet">
-    </wsdl:input>
-      <wsdl:output message="tns:getStudieprogramForOrgenhetResponse" name="getStudieprogramForOrgenhetResponse">
-    </wsdl:output>
+    <wsdl:operation name="getEmne">
+      <wsdl:input message="studinfo:getEmneRequest" />
+      <wsdl:output message="studinfo:getEmneResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getEmnerForOrgenhet">
+      <wsdl:input message="studinfo:getEmnerForOrgenhetRequest"></wsdl:input>
+      <wsdl:output message="studinfo:getEmnerForOrgenhetResponse"></wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getStudieprogram">
-      <wsdl:input message="tns:getStudieprogram" name="getStudieprogram">
-    </wsdl:input>
-      <wsdl:output message="tns:getStudieprogramResponse" name="getStudieprogramResponse">
-    </wsdl:output>
+      <wsdl:input message="studinfo:getStudieprogramRequest"></wsdl:input>
+      <wsdl:output message="studinfo:getStudieprogramResponse"></wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getEmneForOrgEnhet">
-      <wsdl:input message="tns:getEmneForOrgEnhet" name="getEmneForOrgEnhet">
-    </wsdl:input>
-      <wsdl:output message="tns:getEmneForOrgEnhetResponse" name="getEmneForOrgEnhetResponse">
-    </wsdl:output>
+    <wsdl:operation name="getStudieprogrammerForOrgenhet">
+      <wsdl:input message="studinfo:getStudieprogrammerForOrgenhetRequest"></wsdl:input>
+      <wsdl:output message="studinfo:getStudieprogrammerForOrgenhetResponse"></wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getEmne">
-      <wsdl:input message="tns:getEmne" name="getEmne">
-    </wsdl:input>
-      <wsdl:output message="tns:getEmneResponse" name="getEmneResponse">
-    </wsdl:output>
+    <wsdl:operation name="getKurs">
+      <wsdl:input message="studinfo:getKursRequest"></wsdl:input>
+      <wsdl:output message="studinfo:getKursResponse"></wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="StudinfoServiceSoapBinding" type="tns:StudinfoProxy">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="getStudieprogram">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getStudieprogram">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getStudieprogramResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getStudieprogramForOrgenhet">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getStudieprogramForOrgenhet">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getStudieprogramForOrgenhetResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getEmneForOrgEnhet">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getEmneForOrgEnhet">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getEmneForOrgEnhetResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
+  <wsdl:binding name="StudinfoProxySOAP" type="studinfo:StudinfoProxy">
+    <soap:binding style="document"
+      transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="getEmne">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getEmne">
-        <soap:body use="literal"/>
+      <soap:operation soapAction="http://fsws.usit.no/schemas/studinfo/getEmne" />
+      <wsdl:input>
+        <soap:body use="literal" />
       </wsdl:input>
-      <wsdl:output name="getEmneResponse">
-        <soap:body use="literal"/>
+      <wsdl:output>
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="StudinfoService">
-    <wsdl:port binding="tns:StudinfoServiceSoapBinding" name="StudinfoPort">
-      <soap:address location="http://localhost:8080/fsws-proxy/studinfo"/>
+  <wsdl:service name="StudinfoProxy">
+    <wsdl:port binding="studinfo:StudinfoProxySOAP" name="StudinfoProxy">
+      <soap:address location="http://localhost:8080/fsws-proxy/studinfo" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

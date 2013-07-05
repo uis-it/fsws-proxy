@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fsws.usit.no/schemas/studinfo"
+  xmlns:studinfo="http://fsws.usit.no/schemas/studinfo">
+
+  <xs:element name="fs-studieinfo">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="studieprogram" maxOccurs="unbounded" type="studinfo:Studieprogram"/>
+        <xs:element name="kurs" maxOccurs="unbounded" type="studinfo:Kurs"/>
+        <xs:element name="emne" maxOccurs="unbounded" type="studinfo:Emne"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="YESNOType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="J"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Sprakkode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="Terminkode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VÅR"/>
+      <xs:enumeration value="VÅT"/>
+      <xs:enumeration value="VIT"/>
+      <xs:enumeration value="SOM"/>
+      <xs:enumeration value="HØST"/>
+      <xs:enumeration value="HØT"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="Emneid">
+    <xs:sequence>
+      <xs:element name="institusjonsnr" type="xs:integer"/>
+      <xs:element name="emnekode" type="xs:string"/>
+      <xs:element name="versjonskode" type="xs:string"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FsType" abstract="true">
+    <xs:attribute name="sprak" use="optional" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="Studieprogram">
+    <xs:complexContent>
+      <xs:extension base="studinfo:FsType">
+		    <xs:sequence>
+		      <xs:element name="studieprogramkode" type="xs:string"/>
+		      <xs:element name="studieprogramnavn" type="xs:string"/>
+		      <xs:element name="studieprogramnavn_vitn" type="xs:string" nillable="true"/>
+		      <xs:element name="studieprogramnavn_en" type="xs:string" nillable="true"/>
+		      <xs:element name="studieprogramnavn_vitn_en" type="xs:string" nillable="true"/>
+		      <xs:element name="studiepoeng" type="xs:integer"/>
+		      <xs:element name="studieniva" type="xs:string"/>
+		      <xs:element name="studienivakode" type="xs:integer"/>
+		      <xs:element name="studienivanavn" type="xs:string"/>
+		      <xs:element name="fagansvarlig" type="studinfo:Sted" nillable="true"/>
+		      <xs:element name="adminansvarlig" type="studinfo:Sted" nillable="true"/>
+		      <xs:element name="gradnavn" type="xs:string" nillable="true"/>
+		      <xs:element name="nuskode" type="xs:string"/>
+		      <xs:element name="url" type="xs:anyURI" nillable="true"/>
+		      <xs:element name="finansieringsprosent" type="xs:integer" nillable="true"/>
+		      <xs:element name="heltidsprosent" type="xs:integer" nillable="true"/>
+		      <xs:element name="varighet" type="studinfo:VarighetProgram" nillable="true"/>
+		      <xs:element name="grunnstudium" type="studinfo:YESNOType" default="N"/>
+		      <xs:element name="kulltrinnplan" type="studinfo:YESNOType" default="N"/>
+		      <xs:element name="arbeidsformer" type="xs:string" nillable="true"/>
+		      <xs:element name="fagplan_tekst" type="xs:string" nillable="true"/>
+		      <xs:element name="fagplan_URL" type="xs:anyURI" nillable="true"/>
+		      <xs:element name="innhold" type="xs:string" nillable="true"/>
+		      <xs:element name="intro" type="xs:string" nillable="true"/>
+		      <xs:element name="kontaktinformasjon" type="xs:string" nillable="true"/>
+		      <xs:element name="kvalifik_og_jobbmuligheter" type="xs:string" nillable="true"/>
+		      <xs:element name="laringsutbytte" type="xs:string" nillable="true"/>
+		      <xs:element name="litteratur" type="xs:string" nillable="true"/>
+		      <xs:element name="opptaksinformasjon" type="xs:string" nillable="true"/>
+		      <xs:element name="opptakskrav" type="xs:string" nillable="true"/>
+		      <xs:element name="p-formkrav" type="xs:string" nillable="true"/>
+              <xs:element name="p-innhold" type="xs:string" nillable="true"/>
+              <xs:element name="p-kortintr" type="xs:string" nillable="true"/>
+              <xs:element name="p-profkval" type="xs:string" nillable="true"/>
+              <xs:element name="p-studkval" type="xs:string" nillable="true"/>
+		      <xs:element name="se-introd" type="xs:string" nillable="true"/>
+		      <xs:element name="rammeplan_tekst" type="xs:string" nillable="true"/>
+		      <xs:element name="rammeplan_URL" type="xs:anyURI" nillable="true"/>
+		      <xs:element name="studentevaluering" type="xs:string" nillable="true"/>
+		      <xs:element name="utenlandsopphold" type="xs:string" nillable="true"/>
+		      <xs:element name="vurdering_tilleggstekst" type="xs:string" nillable="true"/>
+              <xs:element name="opptak-liste" nillable="true">
+                <xs:complexType>
+                  <xs:sequence>
+		                <xs:element name="opptak" minOccurs="0" maxOccurs="unbounded" type="studinfo:Opptak"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+		      <xs:element name="fagkode" type="xs:string" nillable="true"/>
+		      <xs:element name="sprak-liste" nillable="true" type="studinfo:SprakListe"/>
+		      <xs:element name="utdanningsplan" type="studinfo:Utdanningsplan" nillable="true"/>
+		      <xs:element name="planforslag" type="studinfo:Planforslag" nillable="true"/>
+		      <xs:element name="termin-siste-opptak" type="studinfo:FsYearSemester" nillable="true"/>
+              <xs:any minOccurs="0" maxOccurs="unbounded"/>
+		    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="SprakListe">
+    <xs:sequence>
+      <xs:element name="sprak" minOccurs="0" maxOccurs="unbounded" type="studinfo:Sprak"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="BasisEmne">
+    <xs:complexContent>
+      <xs:extension base="studinfo:FsType">
+		    <xs:sequence>
+		      <xs:element name="emneid" type="studinfo:Emneid"/>
+		      <xs:element name="emnenavn" type="xs:string"/>
+		    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanEmne">
+    <xs:complexContent>
+      <xs:extension base="studinfo:BasisEmne">
+        <xs:sequence>
+          <xs:element name="undtermin" type="xs:integer" nillable="true"/>
+          <xs:any minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ProgramEmne">
+    <xs:complexContent>
+      <xs:extension base="studinfo:BasisEmne">
+        <xs:sequence>
+          <xs:element name="studiepoeng" type="xs:string" nillable="true"/>
+          <xs:element name="undervisningstermin-liste" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="undervisningstermin" minOccurs="0" maxOccurs="unbounded" type="studinfo:Undervisningstermin"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="sorteringsrekkefolge" type="xs:integer" nillable="true"/>
+          <xs:element name="valgstatus" type="xs:string" nillable="true"/>
+          <xs:element name="valgstatusnavn" type="xs:string" nillable="true"/>
+          <xs:element name="valgstatusbeskrivelse" type="xs:string" nillable="true"/>
+          <xs:element name="valgstatusbeskrivelse-en" type="xs:string" nillable="true"/>
+          <xs:element name="undtermin-fra" type="xs:integer"/>
+          <xs:element name="undtermin-til" type="xs:integer" nillable="true"/>
+          <xs:element name="undtermin-default" type="xs:integer" nillable="true"/>
+          <xs:element name="termin-start-fra" type="xs:string" nillable="true"/>
+          <xs:element name="termin-start-til" type="xs:string" nillable="true"/>
+          <xs:element name="termin-valg-til" type="xs:string" nillable="true"/>
+          <xs:any minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Emne">
+    <xs:annotation>
+      <xs:documentation>The position of the element studiepoeng should be moved up, thus it could be declared in BasisEmne.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="studinfo:BasisEmne">
+        <xs:sequence>
+          <xs:element name="emnenavn_en" type="xs:string" nillable="true"/>
+          <xs:element name="studiepoeng" type="xs:integer" nillable="true"/>
+          <xs:element name="status-privatist" type="studinfo:YESNOType" default="N"/>
+          <xs:element name="studieniva" type="xs:string" nillable="true"/>
+          <xs:element name="nuskode" type="xs:string" nillable="true"/>
+          <xs:element name="enkeltemneopptak" type="studinfo:YESNOType" default="N"/>
+          <xs:element name="studierettkrav" type="studinfo:YESNOType" default="N"/>
+          <xs:element name="status_oblig" type="studinfo:YESNOType" default="N"/>
+          <xs:element name="obligund" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="obligoppgave" minOccurs="0" maxOccurs="unbounded" type="studinfo:Obligoppgave"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="undervisningssemester" type="xs:string" nillable="true"/>
+          <xs:element name="antall-undsemester" type="xs:integer" nillable="true"/>
+          <xs:element name="antall-forelesningstimer" type="xs:integer" nillable="true"/>
+          <xs:element name="antall-selvstudiumtimer" type="xs:integer" nillable="true"/>
+          <xs:element name="undsemester-liste" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="undsemester" minOccurs="0" maxOccurs="unbounded" type="studinfo:Undsemester" nillable="true"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="emnetype" type="xs:string" nillable="true"/>
+          <xs:element name="url" type="xs:anyURI" nillable="true"/>
+          <xs:element name="periode-eks" type="studinfo:Semesterperiode" nillable="true"/>
+          <xs:element name="periode-und" type="studinfo:Semesterperiode" nillable="true"/>
+          <xs:element name="eksamenssemester" type="xs:string" nillable="true"/>
+          <xs:element name="anbefalte-forkunnskaper" type="xs:string" nillable="true"/>
+          <xs:element name="formelle-forkunnskaper" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="kravalternativ" minOccurs="0" maxOccurs="unbounded" type="studinfo:Kravalternativ"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="inngar-i-studieprogram-liste" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="inngar-i-studieprogram" minOccurs="0" maxOccurs="unbounded" type="studinfo:Inngar-i-studieprogram"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="inngar-i-fag-liste"> 
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="inngar-i-fag" minOccurs="0" maxOccurs="unbounded" type="studinfo:Inngar-i-fag" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="fagansvarlig" type="studinfo:Sted" nillable="true"/>
+          <xs:element name="adminansvarlig" type="studinfo:Sted" nillable="true"/>
+          <xs:element name="sprak-liste" nillable="true" type="studinfo:SprakListe"/>
+          <xs:element name="fagperson-liste" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="fagperson" minOccurs="0" maxOccurs="unbounded" type="studinfo:Fagperson"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="dato-eksamen" type="xs:string" nillable="true"/>
+          <xs:element name="eksamensordning-liste" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="eksamensordning" minOccurs="0" maxOccurs="unbounded" type="studinfo:Eksamensordning"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="vurdordning-liste" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="vurdordning" minOccurs="0" maxOccurs="unbounded" type="studinfo:Vurdordning"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="vektingsreduksjon" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="redregel" maxOccurs="unbounded" type="studinfo:Redregel"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="abs_forkunnskaper_fritekst" type="xs:string" nillable="true"/>
+          <xs:element name="anb_forkunnskaper_fritekst" type="xs:string" nillable="true"/>
+          <xs:element name="arbeidsformer" type="xs:string" nillable="true"/>
+          <xs:element name="innhold" type="xs:string" nillable="true"/>
+          <xs:element name="intro" type="xs:string" nillable="true"/>
+          <xs:element name="kortsam" type="xs:string" nillable="true"/>
+          <xs:element name="kvalifik_og_jobbmuligheter" type="xs:string" nillable="true"/>
+          <xs:element name="litteratur" type="xs:string" nillable="true"/>
+          <xs:element name="laringsutbytte" type="xs:string" nillable="true"/>
+          <xs:element name="oblig_undakt_tilleggsinfo" type="xs:string" nillable="true"/>
+          <xs:element name="opptakskrav" type="xs:string" nillable="true"/>
+          <xs:element name="praksis" type="xs:string" nillable="true"/>
+          <xs:element name="studentevaluering" type="xs:string" nillable="true"/>
+          <xs:element name="vurdering_tilleggstekst" type="xs:string" nillable="true"/>
+          <xs:element name="apent_for_tillegg" type="xs:string" nillable="true"/>
+          <xs:any minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Kurs">
+    <xs:complexContent>
+      <xs:extension base="studinfo:FsType">
+		    <xs:sequence>
+		      <xs:element name="kursid" type="studinfo:Kursid"/>
+		      <xs:element name="kursnavn" type="xs:string"/>
+		      <xs:element name="fagansvarlig" type="studinfo:Sted" nillable="true"/>
+		      <xs:element name="adminansvarlig" type="studinfo:Sted" nillable="true"/>
+		      <xs:element name="dato-fra" type="xs:date" nillable="true"/>
+		      <xs:element name="dato-til" type="xs:date" nillable="true"/>
+		      <xs:element name="dato-opptak-fra" type="xs:date" nillable="true"/>
+		      <xs:element name="dato-opptak-til" type="xs:date" nillable="true"/>
+		      <xs:element name="dato-frist-soknad" type="xs:date" nillable="true"/>
+		      <xs:element name="url" type="xs:anyURI" nillable="true"/>
+		      <xs:element name="varighettimer" type="xs:integer" nillable="true"/>
+		      <xs:element name="email" type="xs:string" nillable="true"/>
+		      <xs:element name="fjernundervisning" type="studinfo:YESNOType" default="N"/>
+		      <xs:element name="desentral-undervisning" type="studinfo:YESNOType" default="N"/>
+		      <xs:element name="nettbasert-undervisning" type="studinfo:YESNOType" default="N"/>
+		      <xs:element name="kan-tilbys" type="studinfo:YESNOType" default="N"/>
+		      <xs:element name="skal-avholdes" type="studinfo:YESNOType" default="N"/>
+		      <xs:element name="kostnadkommentar" type="xs:string" nillable="true"/>
+		      <xs:element name="kurskategori-liste" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="kurskategori" minOccurs="0" maxOccurs="unbounded" type="studinfo:Kurskategori"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+		      <xs:element name="dato-publiseres-fra" type="xs:date" nillable="true"/>
+		      <xs:element name="dato-publiseres-til" type="xs:date" nillable="true"/>
+          <xs:any minOccurs="0" maxOccurs="unbounded"/>
+		    </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sted">
+    <xs:sequence>
+      <xs:element name="institusjonsnr" type="xs:integer"/>
+      <xs:element name="fakultetsnr" type="xs:integer"/>
+      <xs:element name="instituttnr" type="xs:integer"/>
+      <xs:element name="gruppenr" type="xs:integer"/>
+      <xs:element name="navn" type="xs:string"/>
+      <xs:element name="avdnavn" type="xs:string"/>
+      <xs:element name="url" type="xs:anyURI" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kursid">
+    <xs:sequence>
+      <xs:element name="kurskode" type="xs:string"/>
+      <xs:element name="tidkode" type="xs:NMTOKEN"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kurskategori">
+    <xs:sequence>
+      <xs:element name="kurskategorikode" type="xs:string"/>
+      <xs:element name="kurskategorinavn" type="xs:string"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Opptak">
+    <xs:sequence>
+      <xs:element name="opptakstype" type="xs:string"/>
+      <xs:element name="opptakskode" type="xs:string"/>
+      <xs:element name="frist_soknad" type="xs:date" nillable="true"/>
+      <xs:element name="frist_ettersending" type="xs:date" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Utdanningsplan">
+    <xs:sequence>
+      <xs:element name="planinformasjon-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="planinformasjon" minOccurs="0" maxOccurs="unbounded" type="studinfo:Planinformasjon"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="krav-sammensetting-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="krav-sammensetting" minOccurs="0" maxOccurs="unbounded" type="studinfo:Krav-sammensetting"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Planinformasjon">
+    <xs:sequence>
+      <xs:element name="dato-gjelder-fra" type="xs:date"/>
+      <xs:element name="dato-gjelder-til" type="xs:date" nillable="true"/>
+      <xs:element name="infotekst" type="xs:string"/>
+      <xs:element name="url" type="xs:anyURI" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Krav-sammensetting">
+    <xs:sequence>
+      <xs:element name="termin-gjelder-fra" type="xs:string"/>
+      <xs:element name="arstall-gjelder-fra" type="xs:gYear" nillable="true"/>
+      <xs:element name="terminkode-gjelder-fra" type="studinfo:FsSemester" nillable="true"/>
+      <xs:element name="emnekombinasjon" type="studinfo:Emnekombinasjon"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Emnekombinasjon">
+    <xs:sequence>
+      <xs:element name="emnekombinasjonskode" type="xs:string"/>
+      <xs:element name="emnekombinasjonsnavn" type="xs:string"/>
+      <xs:element name="beskrivelse" type="xs:string" nillable="true"/>
+      <xs:element name="studieretning" type="xs:string" nillable="true"/>
+      <xs:element name="studiepoeng-krav" type="xs:integer" nillable="true"/>
+      <xs:element name="terminnr-relativ-start" type="xs:integer" nillable="true"/>
+      <xs:element name="termin-start-fra" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:element name="termin-start-til" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:element name="fargekode" type="xs:string" nillable="true"/>
+      <xs:element name="veivalg" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="valg-alle-emner" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="opptak" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="emne-liste">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="emne" minOccurs="0" maxOccurs="unbounded" type="studinfo:ProgramEmne" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="planelement-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="planelement" minOccurs="0" maxOccurs="unbounded" type="studinfo:Planelement"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="emnekombinasjon-valg-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="emnekombinasjon-valg" minOccurs="0" maxOccurs="unbounded" type="studinfo:Emnekombinasjon-valg"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="emnekombinasjon-frievalg-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="emnekombinasjon-frievalg" minOccurs="0" maxOccurs="unbounded" type="studinfo:Emnekombinasjon-frievalg"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="emnekombinasjon-liste">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="emnekombinasjon" type="studinfo:Emnekombinasjon" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="niva" use="required" type="xs:integer"/>
+  </xs:complexType>
+  <xs:complexType name="Undervisningstermin">
+    <xs:sequence>
+      <xs:element name="termin-liste">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="termin" maxOccurs="unbounded" type="studinfo:Termin"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="start" use="required" type="studinfo:FsSemester"/>
+  </xs:complexType>
+  <xs:complexType name="Sprak">
+    <xs:sequence>
+      <xs:element name="sprakkode" type="xs:string"/>
+      <xs:element name="undervisning" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="vurdering" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="eksamen" type="studinfo:YESNOType" default="N"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Termin">
+    <xs:sequence>
+      <xs:element name="terminnr" type="xs:integer"/>
+      <xs:element name="terminnavn" type="xs:string"/>
+      <xs:element name="studiepoeng" type="xs:integer" nillable="true"/>
+      <xs:element name="generer_und" type="studinfo:YESNOType" default="N"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Planelement">
+    <xs:sequence>
+      <xs:element name="planelementkode" type="xs:string"/>
+      <xs:element name="planelementnavn" type="xs:string"/>
+      <xs:element name="planelementnavn-en" type="xs:string" nillable="true"/>
+      <xs:element name="sorteringsrekkefolge" type="xs:integer"  nillable="true"/>
+      <xs:element name="valgstatus" type="xs:string" nillable="true"/>
+      <xs:element name="undtermin-fra" type="xs:integer" nillable="true"/>
+      <xs:element name="undtermin-til" type="xs:integer" nillable="true"/>
+      <xs:element name="url" type="xs:anyURI" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Planforslag">
+    <xs:sequence>
+      <xs:element name="beskrivelse" type="xs:string" nillable="true"/>
+      <xs:element name="emnekombinasjonsnavn" type="xs:string"/>
+      <xs:element name="termin-start" type="xs:string" nillable="true"/>
+      <xs:element name="planemne-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="emne" minOccurs="0" maxOccurs="unbounded" type="studinfo:PlanEmne"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Obligoppgave">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="nr" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="Semester">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="nr" use="required" type="xs:integer"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="Semesterperiode">
+    <xs:sequence>
+      <xs:element name="forstegang" type="studinfo:FsYearSemester"/>
+      <xs:element name="sistegang" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kravalternativ">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kravnr" use="required" type="xs:integer"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="Personnavn">
+    <xs:sequence>
+      <xs:element name="etternavn" type="xs:string"/>
+      <xs:element name="fornavn" type="xs:string"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Hjelpemiddel">
+    <xs:sequence>
+      <xs:element name="hjelpemiddelnavn" type="xs:string"/>
+      <xs:element name="hjelpemiddelmerknad" type="xs:string" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Datoperiode">
+    <xs:sequence>
+      <xs:element name="fradato" type="xs:date" nillable="true"/>
+      <xs:element name="tildato" type="xs:date" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Redregel">
+    <xs:sequence>
+      <xs:element name="studiepoeng-reduksjon" type="xs:decimal"/>
+      <xs:element name="periode" type="studinfo:Datoperiode"/>
+      <xs:element name="redregel-emne-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="emne"  minOccurs="0" maxOccurs="unbounded" type="studinfo:BasisEmne"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Undsemester">
+    <xs:sequence>
+      <xs:element name="semester-liste">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="semester" maxOccurs="unbounded" type="studinfo:Semester"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="forstegang" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:element name="sistegang" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Fagperson">
+    <xs:sequence>
+      <xs:element name="personid" type="xs:integer"/>
+      <xs:element name="fnr" type="xs:string"/>
+      <xs:element name="personrolle" type="xs:string"/>
+      <xs:element name="personnavn" type="studinfo:Personnavn"/>
+      <xs:element name="dato-fra" type="xs:date" nillable="true"/>
+      <xs:element name="dato-til" type="xs:date" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Inngar-i-studieprogram">
+    <xs:sequence>
+      <xs:element name="studieprogramkode" type="xs:string"/>
+      <xs:element name="studieprogramnavn" type="xs:string" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Inngar-i-fag">
+    <xs:sequence>
+      <xs:element name="fagkode" type="xs:string"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Eksamensdag">
+    <xs:sequence>
+      <xs:element name="eksamensdagnr" type="xs:integer"/>
+      <xs:element name="studiepoeng-reduksjon" type="xs:string" nillable="true"/>
+      <xs:element name="varighet-timer" type="xs:double" nillable="true"/>
+      <xs:element name="lovlig-hjelpemiddel" type="xs:string" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Eksamensdel">
+    <xs:sequence>
+      <xs:element name="eksamensdelnr" type="xs:integer"/>
+      <xs:element name="eksamensdelnavn" type="xs:string"/>
+      <xs:element name="studiepoeng-reduksjon" type="xs:string" nillable="true"/>
+      <xs:element name="varighet" type="studinfo:VarighetEmne" nillable="true"/>
+      <xs:element name="eksamensform" type="xs:string" nillable="true"/>
+      <xs:element name="karaktervekt" type="xs:string" nillable="true"/>
+      <xs:element name="karregel" type="xs:string" nillable="true"/>
+      <xs:element name="eksamensdag-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="eksamensdag" minOccurs="0" maxOccurs="unbounded" type="studinfo:Eksamensdag"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="dato-eksamen" type="studinfo:FsEksamensdato" nillable="true"/>
+      <xs:element name="lovlig-hjelpemiddel-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="lovlig-hjelpemiddel" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="HjelpemiddelListe">
+    <xs:sequence>
+      <xs:element name="hjelpemiddel" minOccurs="0" maxOccurs="unbounded" type="studinfo:Hjelpemiddel"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Eksamensordning">
+    <xs:sequence>
+      <xs:element name="eksamensordningid" type="xs:string"/>
+      <xs:element name="eksamensordningnavn" type="xs:string"/>
+      <xs:element name="default" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="meld_studentweb" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="hjelpemiddel-liste" nillable="true" type="studinfo:HjelpemiddelListe"/>
+      <xs:element name="karregel" type="xs:string" nillable="true"/>
+      <xs:element name="dato-eksamen" type="xs:string" nillable="true"/>
+      <xs:element name="eksamensdel-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="eksamensdel" minOccurs="0" maxOccurs="unbounded" type="studinfo:Eksamensdel"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Vurdordning">
+    <xs:sequence>
+      <xs:element name="vurdordningid" type="xs:string"/>
+      <xs:element name="vurdordningnavn" type="xs:string"/>
+      <xs:element name="default" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="meld_studentweb" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="vurdkombinasjon" type="studinfo:Vurdkombinasjon" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Vurdenhet">
+    <xs:sequence>
+      <xs:element name="tid" type="studinfo:FsTerminkodeYearMonth" nillable="true"/>
+      <xs:element name="tid-reell" type="studinfo:FsTerminkodeYearMonth" nillable="true"/>
+      <xs:element name="vurdstatus" type="xs:string" nillable="true"/>
+      <xs:element name="dato-eksamen" type="studinfo:FsDate" nillable="true"/>
+      <xs:element name="klokkeslett-eksamen-fremmotetid" type="studinfo:FsTime" nillable="true"/>
+      <xs:element name="dato-uttak" type="studinfo:FsDate" nillable="true"/>
+      <xs:element name="klokkeslett-uttak" type="studinfo:FsTime" nillable="true"/>
+      <xs:element name="dato-innlevering" type="studinfo:FsDate" nillable="true"/>
+      <xs:element name="klokkeslett-innlevering" type="studinfo:FsTime" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Vurdkombtid">
+    <xs:sequence>
+      <xs:element name="vurdtidkode" type="xs:string"/>
+      <xs:element name="vurdtidkode_reell" type="xs:string"/>
+      <xs:element name="arsinkrement" type="xs:integer"/>
+      <xs:element name="vurdstatuskode" type="xs:string"/>
+      <xs:element name="liketallsaar" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="oddetallsaar" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="forstegang" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:element name="sistegang" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Vurdkombinasjon">
+    <xs:sequence>
+      <xs:element name="vurdkombkode" type="xs:string"/>
+      <xs:element name="vurdkombnavn" type="xs:string"/>
+      <xs:element name="vurdform" type="xs:string" nillable="true"/>
+      <xs:element name="vurdkombtype" type="xs:string" nillable="true"/>
+      <xs:element name="forstegang" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:element name="sistegang" type="studinfo:FsYearSemester" nillable="true"/>
+      <xs:element name="brok" type="xs:string" default="1/1"/>
+      <xs:element name="varighet" type="studinfo:VarighetEmne" nillable="true"/>
+      <xs:element name="vurdering" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="alle-kandidater" type="studinfo:YESNOType" default="N"/>
+      <xs:element name="karregelkode" type="xs:integer" nillable="true"/>
+      <xs:element name="karregel" type="xs:string" nillable="true"/>
+      <xs:element name="vurdkombtider" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="vurdkombtid" minOccurs="0" maxOccurs="unbounded" type="studinfo:Vurdkombtid"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="hjelpemiddel-liste" nillable="true" type="studinfo:HjelpemiddelListe"/>
+      <xs:element name="tid" type="studinfo:FsTerminkodeYearMonth" nillable="true"/>
+      <xs:element name="tid-reell" type="studinfo:FsTerminkodeYearMonth" nillable="true"/>
+      <xs:element name="vurdstatus" type="xs:string" nillable="true"/>
+      <xs:element name="dato-uttak" type="xs:date" nillable="true"/>
+      <xs:element name="klokkeslett-uttak" type="studinfo:FsTime" nillable="true"/>
+      <xs:element name="dato-innlevering" type="xs:date" nillable="true"/>
+      <xs:element name="klokkeslett-innlevering" type="xs:date" nillable="true"/>
+      <xs:element name="dato-eksamen" type="xs:date" nillable="true"/>
+      <xs:element name="klokkeslett-eksamen-fremmotetid" type="studinfo:FsTime" nillable="true"/>
+      <xs:element name="vurdenheter" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="vurdenhet" minOccurs="0" maxOccurs="unbounded" type="studinfo:Vurdenhet"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="vurdkombinasjon-liste" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="vurdkombinasjon" minOccurs="0" maxOccurs="unbounded" type="studinfo:Vurdkombinasjon"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="niva" use="required" type="xs:integer"/>
+  </xs:complexType>
+  <xs:simpleType name="FsTerminkodeYearMonth">
+    <xs:annotation>
+      <xs:documentation>Format: YYYYMMXX where XX is an optional code
+        codes: EO - ekstra ordinær, K - kont, KN - Kont ny
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{6}[A-Z]{0,2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FsYearSemester">
+    <xs:annotation>
+      <xs:documentation>Format: YYYY where X either H(øst) or V(år)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\d{4}(H|V))?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FsDate">
+    <xs:annotation>
+      <xs:documentation>This should be xs:date with proper separators, and "Frist innlevering: should be put in a separate element</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{2}\.\d{2}\.\d{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FsTime">
+    <xs:annotation>
+      <xs:documentation>This should be formatted as proper xs:time</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\d{2}:\d{2})?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FsEksamensdato">
+    <xs:annotation>
+      <xs:documentation>This should be a complex type that contains date and time for the test and / or submission date.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern
+        value="((Uttak\: \d{2}\.\d{2}\.\d{4} )?(Frist innlevering\: )?(\d{2}\.\d{2}\.\d{4})( kl\. \d{2}\:\d{2})?)?"
+      />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FsSemester">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(HØST|VÅR)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VarighetProgram">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d+ (År|Year(s)?|Semester(s)?|Semestre)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VarighetEmne">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d+(\.\d+)? (Semester(s)?|Semestre|Måned(er)?|Måneder|Month(s)?|Uke(r)?|Veke(r)?|Week(s)?|Dag(er)?|Day(s)?|Time(r)?|Hour(s)?|Minutt(er)?|Minute(s)?)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Emnekombinasjon-valg">
+    <xs:sequence>
+      <xs:element name="studieprogramkode" type="xs:string"/>
+      <xs:element name="arstall-kull" type="xs:integer"/>
+      <xs:element name="terminkode-kull" type="studinfo:FsSemester"/>
+      <xs:element name="dato-start" type="xs:date" nillable="true"/>
+      <xs:element name="dato-frist" type="xs:date" nillable="true"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Emnekombinasjon-frievalg">
+    <xs:sequence>
+      <xs:element name="lopenr" type="xs:integer"/>
+      <xs:element name="institusjonsnr" type="xs:integer"/>
+      <xs:element name="fakultetsnr" type="xs:integer"/>
+      <xs:element name="instituttnr" type="xs:integer" nillable="true"/>
+      <xs:element name="gruppenr" type="xs:integer" nillable="true"/>
+      <xs:element name="studienivakode-fra" type="xs:integer"/>
+      <xs:element name="studienivakode-til" type="xs:string"/>
+      <xs:element name="studierettkrav" type="studinfo:YESNOType" default="N"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

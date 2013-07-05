@@ -224,11 +224,15 @@
             </goals>
             <configuration>
               <defaultOptions>
+                <bindingFiles>
+                  <bindingFile>${basedir}/src/main/jaxb/binding.xml</bindingFile>
+                </bindingFiles>
                 <extraargs>
                   <extraarg>-impl</extraarg>
                 </extraargs>
                 <xjcargs>
                   <xjcarg>-Xxew</xjcarg>
+                  <xjcarg>-Xxew:instantiate lazy</xjcarg>
                   <xjcarg>-Xxew:delete</xjcarg>
                 </xjcargs>
               </defaultOptions>
