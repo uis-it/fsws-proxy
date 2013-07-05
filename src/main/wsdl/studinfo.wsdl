@@ -185,6 +185,42 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getEmnerForOrgenhet">
+      <soap:operation soapAction="http://fsws.usit.no/schemas/studinfo/getEmnerForOrgenhet" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudieprogram">
+      <soap:operation soapAction="http://fsws.usit.no/schemas/studinfo/getStudieprogram" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudieprogrammerForOrgenhet">
+      <soap:operation soapAction="http://fsws.usit.no/schemas/studinfo/getStudieprogrammerForOrgenhet" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getKurs">
+      <soap:operation soapAction="http://fsws.usit.no/schemas/studinfo/getKurs" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="StudinfoProxy">
     <wsdl:port binding="studinfo:StudinfoProxySOAP" name="StudinfoProxy">
