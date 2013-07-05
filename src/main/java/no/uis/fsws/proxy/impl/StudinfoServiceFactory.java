@@ -28,8 +28,6 @@ import javax.annotation.PreDestroy;
 import lombok.NonNull;
 import lombok.Setter;
 
-import no.uis.fsws.proxy.FsWsServiceFactory;
-import no.uis.fsws.proxy.ProxyPrincipal;
 import no.uis.fsws.studinfo.StudInfoImport;
 import no.uis.fsws.studinfo.impl.StudInfoImportImpl;
 import no.usit.fsws.studinfo.StudInfoService;

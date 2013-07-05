@@ -10,7 +10,7 @@
   <url>https://github.com/uis-it/fsws-proxy</url>
 
   <inceptionYear>2013</inceptionYear>
-  
+
   <parent>
     <groupId>no.uis</groupId>
     <artifactId>parent-pom</artifactId>
@@ -43,7 +43,7 @@
     <mimepull.version>1.6</mimepull.version>
     <staxex.version>1.7.1</staxex.version>
   </properties>
-  
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -113,7 +113,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.apache.cxf</groupId>
@@ -132,7 +132,7 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-        <dependency>
+    <dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>Saxon-HE</artifactId>
       <version>9.4.0.6</version>
@@ -146,10 +146,8 @@
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
     </dependency>
-    <!--dependency>
-      <groupId>no.uis.fsws</groupId>
-      <artifactId>studinfo-import</artifactId>
-    </dependency-->
+    <!--dependency> <groupId>no.uis.fsws</groupId> <artifactId>studinfo-import</artifactId> 
+      </dependency -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -210,31 +208,6 @@
             <wtpversion>2.0</wtpversion>
           </configuration>
         </plugin>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-codegen-plugin</artifactId>
-                    <versionRange>[2.3.0,)</versionRange>
-                    <goals>
-                      <goal>wsdl2java</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore></ignore>
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -261,22 +234,10 @@
               </defaultOptions>
               <wsdlOptions>
                 <wsdlOption>
-                  <wsdlArtifact>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>fsws-proxy-wsdl</artifactId>
-                    <version>${project.version}</version>
-                    <type>wsdl</type>
-                    <classifier>studinfo</classifier>
-                  </wsdlArtifact>
+                  <wsdl>${basedir}/src/main/wsdl/studinfo.wsdl</wsdl>
                 </wsdlOption>
                 <wsdlOption>
-                  <wsdlArtifact>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>fsws-proxy-wsdl</artifactId>
-                    <version>${project.version}</version>
-                    <type>wsdl</type>
-                    <classifier>cdm</classifier>
-                  </wsdlArtifact>
+                  <wsdl>${basedir}/src/main/wsdl/cdm.wsdl</wsdl>
                 </wsdlOption>
               </wsdlOptions>
             </configuration>
@@ -340,12 +301,58 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.10</version>
         <configuration>
-          <configLocation>../checkstyle/checkstyle.xml</configLocation>
-          <propertyExpansion>basedir=${basedir}/..</propertyExpansion>
+          <configLocation>checkstyle/checkstyle.xml</configLocation>
+          <propertyExpansion>basedir=${basedir}</propertyExpansion>
           <suppressionsLocation>checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
           <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>${basedir}/src/wsdl/studinfo.wsdl</file>
+                  <type>wsdl</type>
+                  <classifier>studinfo</classifier>
+                </artifact>
+                <artifact>
+                  <file>${basedir}/src/wsdl/cdm.wsdl</file>
+                  <type>wsdl</type>
+                  <classifier>cdm</classifier>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/api.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-api-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
-  </build> 
+  </build>
 </project>

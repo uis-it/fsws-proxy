@@ -14,15 +14,18 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy;
+package no.uis.fsws.proxy.impl;
+
+import java.security.Principal;
 
 
 /**
- * Interface for StudinfoImport factory.
+ * Interface for Authorizer.
+ * @author 2904630
  *
- * @param <T>
  */
-public interface FsWsServiceFactory<T> {
+public interface Authorizer {
+  ProxyPrincipal authenticate(String username, String password);
 
-  T getService(ProxyPrincipal p);
+  boolean hasAuthorization(Principal principal, String authorizationType, String authorization);
 }

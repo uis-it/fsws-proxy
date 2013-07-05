@@ -17,8 +17,6 @@
   <!--import resource="classpath:META-INF/cxf/cxf-servlet.xml" /-->
 
   <context:annotation-config />
-  <!--bean
-    class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" /-->
 
   <jaxws:endpoint
     xmlns:studinfo="http://fsws.usit.no/schemas/studinfo"

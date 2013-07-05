@@ -19,8 +19,6 @@ package no.uis.fsws.proxy.impl;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import no.uis.fsws.proxy.FsWsServiceFactory;
-import no.uis.fsws.proxy.ProxyPrincipal;
 
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;

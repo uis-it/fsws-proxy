@@ -18,8 +18,6 @@ package no.uis.fsws.proxy.impl;
 
 import java.security.Principal;
 
-import no.uis.fsws.proxy.Authorizer;
-import no.uis.fsws.proxy.ProxyPrincipal;
 
 /**
  * Simple Authorizer that does not verify the password and authorizes all users. 

@@ -14,14 +14,16 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy;
+package no.uis.fsws.proxy.impl;
 
-import java.security.Principal;
+
 
 /**
- * simple username/password principal. 
+ * Interface for StudinfoImport factory.
+ *
+ * @param <T>
  */
-public interface ProxyPrincipal extends Principal {
+public interface FsWsServiceFactory<T> {
 
-  String getPassword();
+  T getService(ProxyPrincipal p);
 }

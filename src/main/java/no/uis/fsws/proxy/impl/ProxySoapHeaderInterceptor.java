@@ -29,8 +29,6 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-import no.uis.fsws.proxy.Authorizer;
-import no.uis.fsws.proxy.ProxyPrincipal;
 
 import org.apache.cxf.binding.soap.interceptor.SoapHeaderInterceptor;
 import org.apache.cxf.configuration.security.AuthorizationPolicy;

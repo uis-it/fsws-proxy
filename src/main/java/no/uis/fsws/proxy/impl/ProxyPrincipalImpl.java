@@ -16,7 +16,6 @@
 
 package no.uis.fsws.proxy.impl;
 
-import no.uis.fsws.proxy.ProxyPrincipal;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
