@@ -341,6 +341,7 @@
         <configuration>
           <descriptors>
             <descriptor>src/main/assembly/api.xml</descriptor>
+            <descriptor>src/main/assembly/api-sources.xml</descriptor>
           </descriptors>
         </configuration>
         <executions>
