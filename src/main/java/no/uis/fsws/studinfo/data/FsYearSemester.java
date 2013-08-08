@@ -34,7 +34,7 @@ import lombok.experimental.Value;
     StringBuilder sb = new StringBuilder();
     sb.append(year);
     sb.append(semester.name().charAt(0));
-    return super.toString();
+    return sb.toString();
   }
 
   public static FsYearSemester valueOf(final String val) {
