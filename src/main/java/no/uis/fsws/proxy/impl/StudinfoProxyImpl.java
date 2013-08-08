@@ -18,7 +18,6 @@ package no.uis.fsws.proxy.impl;
 
 import java.util.List;
 import java.util.concurrent.Callable;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -26,15 +25,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PreDestroy;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebResult;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.ws.RequestWrapper;
-import javax.xml.ws.ResponseWrapper;
 
 import lombok.Setter;
-
 import no.uis.fsws.studinfo.StudInfoImport;
 import no.usit.fsws.schemas.studinfo.Emne;
 import no.usit.fsws.schemas.studinfo.FsStudieinfo;
@@ -103,8 +96,8 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
   }
 
   @Override
-  public List<Emne> getEmnerForOrgenhet(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak, final int institusjonsnr,
-      final Integer fakultetsnr, final Integer instituttnr, final Integer gruppenr)
+  public List<Emne> getEmnerForOrgenhet(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak,
+      final int institusjonsnr, final Integer fakultetsnr, final Integer instituttnr, final Integer gruppenr)
   {
     final StudInfoImport svc = getServiceForPrincipal();
     try {
@@ -112,7 +105,8 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
 
         @Override
         public List<Emne> call() throws Exception {
-          final FsStudieinfo sinfo = svc.fetchSubjects(institusjonsnr, fakultetsnr == null ? -1 : fakultetsnr.intValue(), arstall.getYear(), terminkode.toString(), sprak.toString());
+          final FsStudieinfo sinfo = svc.fetchSubjects(institusjonsnr, fakultetsnr == null ? -1 : fakultetsnr.intValue(),
+            arstall.getYear(), terminkode.toString(), sprak.toString());
           return sinfo.getEmne();
         }
       });
@@ -122,10 +116,10 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
       throw new RuntimeException(e);
     }
   }
-  
+
   @Override
-  public List<Emne> getEmne(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak, final int institusjonsnr,
-    final String emnekode, final String versjonskode)
+  public List<Emne> getEmne(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak,
+      final int institusjonsnr, final String emnekode, final String versjonskode)
   {
     final StudInfoImport svc = getServiceForPrincipal();
     try {
@@ -133,7 +127,8 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
 
         @Override
         public List<Emne> call() throws Exception {
-          final FsStudieinfo sinfo = svc.fetchSubject(institusjonsnr, emnekode, versjonskode, arstall.getYear(), terminkode.toString(), sprak.toString());
+          final FsStudieinfo sinfo = svc.fetchSubject(institusjonsnr, emnekode, versjonskode, arstall.getYear(),
+            terminkode.toString(), sprak.toString());
           return sinfo.getEmne();
         }
       });
@@ -143,7 +138,7 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
       throw new RuntimeException(e);
     }
   }
-  
+
   @PreDestroy
   public void cleanup() {
     executor.shutdown();
