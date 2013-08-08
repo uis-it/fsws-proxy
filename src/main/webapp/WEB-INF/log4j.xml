@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
   <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File" value="${catalina.base}/logs/studinfo-solr.log"/>
+    <param name="File" value="${catalina.base}/logs/fsws-proxy.log"/>
     <param name="Threshold" value="DEBUG"/>
     <param name="DatePattern" value="'.'yyyy-MM-dd"/>
     <layout class="org.apache.log4j.PatternLayout">
@@ -29,7 +29,7 @@
   </logger>
   
   <root>
-    <level value="ERROR"/>
+    <level value="WARN"/>
     <appender-ref ref="FILE"/>
   </root>
 </log4j:configuration>
