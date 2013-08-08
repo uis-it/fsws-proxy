@@ -146,8 +146,6 @@
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
     </dependency>
-    <!--dependency> <groupId>no.uis.fsws</groupId> <artifactId>studinfo-import</artifactId> 
-      </dependency -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -156,18 +154,6 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.github.jaxb-xew-plugin</groupId>
-      <artifactId>jaxb-xew-plugin</artifactId>
-      <version>1.1</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>wstx-asl</artifactId>
-          <groupId>org.codehaus.woodstox</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 
@@ -229,14 +215,6 @@
                   <bindingFile>${basedir}/src/main/jaxb/binding.xml</bindingFile>
                   <xsd>${basedir}/src/main/wsdl/studinfo.xsd</xsd>
                 </bindingFiles>
-                <!--extraargs>
-                  <extraarg>-impl</extraarg>
-                </extraargs-->
-                <!--xjcargs>
-                  <xjcarg>-Xxew</xjcarg>
-                  <xjcarg>-Xxew:instantiate lazy</xjcarg>
-                  <xjcarg>-Xxew:delete</xjcarg>
-                </xjcargs-->
               </defaultOptions>
               <wsdlOptions>
                 <wsdlOption>
@@ -249,19 +227,6 @@
             </configuration>
           </execution>
         </executions>
-        <!--dependencies>
-          <dependency>
-            <groupId>com.github.jaxb-xew-plugin</groupId>
-            <artifactId>jaxb-xew-plugin</artifactId>
-            <version>1.1</version>
-            <exclusions>
-              <exclusion>
-                <groupId>org.codehaus.woodstox</groupId>
-                <artifactId>wstx-asl</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-        </dependencies-->
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
