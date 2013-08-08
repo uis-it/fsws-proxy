@@ -16,6 +16,7 @@
 
 package no.uis.fsws.proxy.impl;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import java.util.concurrent.ExecutionException;
@@ -25,127 +26,134 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PreDestroy;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.ws.RequestWrapper;
+import javax.xml.ws.ResponseWrapper;
 
 import lombok.Setter;
 
-import no.uis.fsws.proxy.StudinfoProxy;
 import no.uis.fsws.studinfo.StudInfoImport;
+import no.usit.fsws.schemas.studinfo.Emne;
 import no.usit.fsws.schemas.studinfo.FsStudieinfo;
+import no.usit.fsws.schemas.studinfo.Kurs;
+import no.usit.fsws.schemas.studinfo.Sprakkode;
+import no.usit.fsws.schemas.studinfo.Studieprogram;
+import no.usit.fsws.schemas.studinfo.StudinfoProxy;
+import no.usit.fsws.schemas.studinfo.Terminkode;
 
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
- * Implementation using the studinfo-import library. 
+ * Implementation using the studinfo-import library.
  */
-@ManagedResource(
-  objectName = "uis:service=ws-fsws-proxy,component=studinfo",
-  description = "Studinfo Proxy",
-  log = false
-)
+@ManagedResource(objectName = "uis:service=ws-fsws-proxy,component=studinfo", description = "Studinfo Proxy", log = false)
 public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> implements StudinfoProxy {
 
   @Setter(onMethod = @_(@Required)) private ThreadPoolExecutor executor;
   @Setter private long timeoutMinutes = 30L;
+
+  @Override
+  public List<Studieprogram> getStudieprogrammerForOrgenhet(final XMLGregorianCalendar arstall, final Terminkode terminkode,
+      final Sprakkode sprak, final int institusjonsnr, final Integer fakultetsnr, final Integer instituttnr,
+      final Integer gruppenr, final boolean medUPinfo)
+  {
+    final StudInfoImport svc = getServiceForPrincipal();
+
+    try {
+      Future<List<Studieprogram>> future = executor.submit(new Callable<List<Studieprogram>>() {
+
+        @Override
+        public List<Studieprogram> call() throws Exception {
+          final FsStudieinfo sinfo = svc.fetchStudyPrograms(institusjonsnr, fakultetsnr != null ? fakultetsnr : -1,
+            arstall.getYear(), terminkode.toString(), medUPinfo, sprak.toString());
+          return sinfo.getStudieprogram();
+        }
+      });
+
+      return future.get(timeoutMinutes, TimeUnit.MINUTES);
+    } catch(ExecutionException | InterruptedException | TimeoutException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public List<Studieprogram> getStudieprogram(final XMLGregorianCalendar arstall, final Terminkode terminkode,
+      final Sprakkode sprak, final boolean medUPinfo, final String studieprogramkode)
+  {
+    final StudInfoImport svc = getServiceForPrincipal();
+    try {
+      Future<List<Studieprogram>> future = executor.submit(new Callable<List<Studieprogram>>() {
+
+        @Override
+        public List<Studieprogram> call() throws Exception {
+          final FsStudieinfo sinfo = svc.fetchStudyProgram(studieprogramkode, arstall.getYear(), terminkode.toString(),
+            medUPinfo, sprak.toString());
+          return sinfo.getStudieprogram();
+        }
+      });
+
+      return future.get(timeoutMinutes, TimeUnit.MINUTES);
+    } catch(ExecutionException | InterruptedException | TimeoutException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public List<Emne> getEmnerForOrgenhet(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak, final int institusjonsnr,
+      final Integer fakultetsnr, final Integer instituttnr, final Integer gruppenr)
+  {
+    final StudInfoImport svc = getServiceForPrincipal();
+    try {
+      Future<List<Emne>> future = executor.submit(new Callable<List<Emne>>() {
+
+        @Override
+        public List<Emne> call() throws Exception {
+          final FsStudieinfo sinfo = svc.fetchSubjects(institusjonsnr, fakultetsnr == null ? -1 : fakultetsnr.intValue(), arstall.getYear(), terminkode.toString(), sprak.toString());
+          return sinfo.getEmne();
+        }
+      });
+
+      return future.get(timeoutMinutes, TimeUnit.MINUTES);
+    } catch(ExecutionException | InterruptedException | TimeoutException e) {
+      throw new RuntimeException(e);
+    }
+  }
   
   @Override
-  public FsStudieinfo getStudieprogramForOrgenhet(final int arstall,
-      final String terminkode, final String sprak,
-      final int institusjonsnr, final Integer fakultetsnr,
-      final Integer instituttnr, final Integer gruppenr,
-      final boolean medUPinfo)
+  public List<Emne> getEmne(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak, final int institusjonsnr,
+    final String emnekode, final String versjonskode)
   {
     final StudInfoImport svc = getServiceForPrincipal();
-    
     try {
-      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
+      Future<List<Emne>> future = executor.submit(new Callable<List<Emne>>() {
 
         @Override
-        public FsStudieinfo call() throws Exception {
-          return svc.fetchStudyPrograms(institusjonsnr, fakultetsnr != null ? fakultetsnr : -1, arstall, terminkode, medUPinfo, sprak);
+        public List<Emne> call() throws Exception {
+          final FsStudieinfo sinfo = svc.fetchSubject(institusjonsnr, emnekode, versjonskode, arstall.getYear(), terminkode.toString(), sprak.toString());
+          return sinfo.getEmne();
         }
       });
-      
+
       return future.get(timeoutMinutes, TimeUnit.MINUTES);
     } catch(ExecutionException | InterruptedException | TimeoutException e) {
       throw new RuntimeException(e);
     }
   }
-
-  @Override
-  public FsStudieinfo getStudieprogram(final int arstall, final String terminkode,
-      final boolean medUPinfo, final String sprak, final String studieprogramkode)
-  {
-    final StudInfoImport svc = getServiceForPrincipal();
-    try {
-      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
-
-        @Override
-        public FsStudieinfo call() throws Exception {
-          return svc.fetchStudyProgram(studieprogramkode, arstall, terminkode, medUPinfo, sprak);
-        }
-      });
-      
-      return future.get(timeoutMinutes, TimeUnit.MINUTES);
-    } catch(ExecutionException | InterruptedException | TimeoutException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  /**
-   * @param arstall year
-   * @param terminkode semester code
-   * @param sprak language code
-   * @param institusjonsnr FS institution code
-   * @param fakultetsnr FS faculty code
-   * @param instituttnr ignored
-   * @param gruppenr ignored
-   */
-  @Override
-  public FsStudieinfo getEmneForOrgEnhet(final int arstall,
-      final String terminkode, final String sprak,
-      final int institusjonsnr, final Integer fakultetsnr,
-      final Integer instituttnr, final Integer gruppenr)
-  {
-    final StudInfoImport svc = getServiceForPrincipal();
-    try {
-      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
-
-        @Override
-        public FsStudieinfo call() throws Exception {
-          return svc.fetchSubjects(institusjonsnr, fakultetsnr, arstall, terminkode, sprak);
-        }
-      });
-      
-      return future.get(timeoutMinutes, TimeUnit.MINUTES);
-    } catch(ExecutionException | InterruptedException | TimeoutException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  @Override
-  public FsStudieinfo getEmne(final int arstall, final String terminkode,
-      final String sprak, final int institusjonsnr, final String emnekode, final String versjonskode)
-  {
-    final StudInfoImport svc = getServiceForPrincipal();
-    try {
-      Future<FsStudieinfo> future = executor.submit(new Callable<FsStudieinfo>() {
-
-        @Override
-        public FsStudieinfo call() throws Exception {
-          return svc.fetchSubject(institusjonsnr, emnekode, versjonskode, arstall, terminkode, sprak);
-        }
-      });
-      
-      return future.get(timeoutMinutes, TimeUnit.MINUTES);
-    } catch(ExecutionException | InterruptedException | TimeoutException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
+  
   @PreDestroy
   public void cleanup() {
     executor.shutdown();
   }
-}
 
+  @Override
+  public List<Kurs> getKurs(XMLGregorianCalendar arstall, Terminkode terminkode, Sprakkode sprak, int institusjonsnr,
+      Integer fakultetsnr, Integer instituttnr, Integer gruppenr)
+  {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

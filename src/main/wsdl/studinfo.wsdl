@@ -127,29 +127,29 @@
     <wsdl:part element="studinfo:getEmneResponse" name="parameters" />
   </wsdl:message>
   <wsdl:message name="getEmnerForOrgenhetRequest">
-    <wsdl:part name="parameters" element="studinfo:getEmnerForOrgenhet"></wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getEmnerForOrgenhet"/>
   </wsdl:message>
   <wsdl:message name="getEmnerForOrgenhetResponse">
-    <wsdl:part name="parameters" element="studinfo:getEmnerForOrgenhetResponse"></wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getEmnerForOrgenhetResponse"/>
   </wsdl:message>
   <wsdl:message name="getStudieprogramRequest">
-    <wsdl:part name="parameters" element="studinfo:getStudieprogram"></wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getStudieprogram"/>
   </wsdl:message>
   <wsdl:message name="getStudieprogramResponse">
-    <wsdl:part name="parameters" element="studinfo:getStudieprogramResponse"></wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getStudieprogramResponse"/>
   </wsdl:message>
   <wsdl:message name="getStudieprogrammerForOrgenhetRequest">
-    <wsdl:part name="parameters" element="studinfo:getStudieprogrammerForOrgenhet"></wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getStudieprogrammerForOrgenhet"/>
   </wsdl:message>
   <wsdl:message name="getStudieprogrammerForOrgenhetResponse">
     <wsdl:part name="parameters"
-      element="studinfo:getStudieprogrammerForOrgenhetResponse"></wsdl:part>
+      element="studinfo:getStudieprogrammerForOrgenhetResponse"/>
   </wsdl:message>
   <wsdl:message name="getKursRequest">
-    <wsdl:part name="parameters" element="studinfo:getKurs"></wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getKurs"/>
   </wsdl:message>
   <wsdl:message name="getKursResponse">
-    <wsdl:part name="parameters" element="studinfo:getKursResponse"></wsdl:part>
+    <wsdl:part name="parameters" element="studinfo:getKursResponse"/>
   </wsdl:message>
   <wsdl:portType name="StudinfoProxy">
     <wsdl:operation name="getEmne">
@@ -157,20 +157,20 @@
       <wsdl:output message="studinfo:getEmneResponse" />
     </wsdl:operation>
     <wsdl:operation name="getEmnerForOrgenhet">
-      <wsdl:input message="studinfo:getEmnerForOrgenhetRequest"></wsdl:input>
-      <wsdl:output message="studinfo:getEmnerForOrgenhetResponse"></wsdl:output>
+      <wsdl:input message="studinfo:getEmnerForOrgenhetRequest"/>
+      <wsdl:output message="studinfo:getEmnerForOrgenhetResponse"/>
     </wsdl:operation>
     <wsdl:operation name="getStudieprogram">
-      <wsdl:input message="studinfo:getStudieprogramRequest"></wsdl:input>
-      <wsdl:output message="studinfo:getStudieprogramResponse"></wsdl:output>
+      <wsdl:input message="studinfo:getStudieprogramRequest"/>
+      <wsdl:output message="studinfo:getStudieprogramResponse"/>
     </wsdl:operation>
     <wsdl:operation name="getStudieprogrammerForOrgenhet">
-      <wsdl:input message="studinfo:getStudieprogrammerForOrgenhetRequest"></wsdl:input>
-      <wsdl:output message="studinfo:getStudieprogrammerForOrgenhetResponse"></wsdl:output>
+      <wsdl:input message="studinfo:getStudieprogrammerForOrgenhetRequest"/>
+      <wsdl:output message="studinfo:getStudieprogrammerForOrgenhetResponse"/>
     </wsdl:operation>
     <wsdl:operation name="getKurs">
-      <wsdl:input message="studinfo:getKursRequest"></wsdl:input>
-      <wsdl:output message="studinfo:getKursResponse"></wsdl:output>
+      <wsdl:input message="studinfo:getKursRequest"/>
+      <wsdl:output message="studinfo:getKursResponse"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="StudinfoProxySOAP" type="studinfo:StudinfoProxy">

@@ -7,7 +7,6 @@
     xmlns:studinfo="http://fsws.usit.no/schemas/studinfo"
     jaxb:extensionBindingPrefixes="xjc annox"
 >
-
   <jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel" typesafeEnumMemberName="generateName">
     <jaxb:serializable uid="1" />
     <xjc:javaType name="no.uis.fsws.studinfo.data.FsSemester" xmlType="studinfo:FsSemester" adapter="no.uis.fsws.studinfo.util.FsSemesterAdapter"/>

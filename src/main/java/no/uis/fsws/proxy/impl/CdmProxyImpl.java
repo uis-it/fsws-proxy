@@ -16,7 +16,7 @@
 
 package no.uis.fsws.proxy.impl;
 
-import no.uis.fsws.proxy.CdmProxy;
+import no.usit.fsws.schemas.cdm.CdmProxy;
 
 /**
  * Implementation of CDM proxy.

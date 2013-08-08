@@ -226,15 +226,16 @@
               <defaultOptions>
                 <bindingFiles>
                   <bindingFile>${basedir}/src/main/jaxb/binding.xml</bindingFile>
+                  <xsd>${basedir}/src/main/wsdl/studinfo.xsd</xsd>
                 </bindingFiles>
-                <extraargs>
+                <!--extraargs>
                   <extraarg>-impl</extraarg>
-                </extraargs>
-                <xjcargs>
+                </extraargs-->
+                <!--xjcargs>
                   <xjcarg>-Xxew</xjcarg>
                   <xjcarg>-Xxew:instantiate lazy</xjcarg>
                   <xjcarg>-Xxew:delete</xjcarg>
-                </xjcargs>
+                </xjcargs-->
               </defaultOptions>
               <wsdlOptions>
                 <wsdlOption>
@@ -247,7 +248,7 @@
             </configuration>
           </execution>
         </executions>
-        <dependencies>
+        <!--dependencies>
           <dependency>
             <groupId>com.github.jaxb-xew-plugin</groupId>
             <artifactId>jaxb-xew-plugin</artifactId>
@@ -259,7 +260,7 @@
               </exclusion>
             </exclusions>
           </dependency>
-        </dependencies>
+        </dependencies-->
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
