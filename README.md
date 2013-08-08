@@ -1,6 +1,6 @@
 fsws-proxy
 ==========
 
-This web service is use to cope with some short sommings of the original FS-WS. 
+This web service deals with some shortcomings of the original FS-WS (https://www.fellesstudentsystem.no/dokumentasjon/teknisk/fsws-dok/). 
 Specifically a proper WSDL with an XML schema and request queuing to cope with limitations of the underlying 
 Oracle procedures.

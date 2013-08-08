@@ -172,6 +172,7 @@
   </dependencies>
 
   <build>
+    <finalName>fsws-proxy</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
