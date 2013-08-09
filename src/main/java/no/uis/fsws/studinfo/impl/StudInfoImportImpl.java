@@ -119,15 +119,12 @@ public class StudInfoImportImpl implements StudInfoImport {
 
     @Cleanup StringWriter resultWriter = new StringWriter();
     Result result = new StreamResult(resultWriter);
-    // This doens't work for CData content for some reason
-    // JAXBResult result = new JAXBResult(jc);
-    // return (FsStudieinfo)result.getResult();
     stylesheet.transform(input, result);
 
     @Cleanup Reader unmarshalSource = new StringReader(resultWriter.toString());
-    //final Reader tmpSource = new InputStreamReader(new FileInputStream(resultFile), IOUtils.UTF8_CHARSET);
 
     JAXBContext jc = JAXBContext.newInstance(FsStudieinfo.class);
+
     FsStudieinfo sinfo = (FsStudieinfo)jc.createUnmarshaller().unmarshal(unmarshalSource);
 
     return sinfo;
