@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.studinfo;
+package no.uis.fsws.proxy;
 
 import no.usit.fsws.schemas.studinfo.FsStudieinfo;
 

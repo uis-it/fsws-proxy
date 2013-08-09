@@ -14,22 +14,14 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
+import java.security.Principal;
 
 /**
- * A username/password principal. 
+ * simple username/password principal. 
  */
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode
-public class ProxyPrincipalImpl implements ProxyPrincipal {
+public interface ProxyPrincipal extends Principal {
 
-  @Getter @NonNull private final String name;
-  @Getter private final String password;
+  String getPassword();
 }

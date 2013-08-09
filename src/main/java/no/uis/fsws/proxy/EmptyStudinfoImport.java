@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.studinfo.impl;
+package no.uis.fsws.proxy;
 
 import java.io.Reader;
 

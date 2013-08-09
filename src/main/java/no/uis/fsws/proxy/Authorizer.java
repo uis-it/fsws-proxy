@@ -14,19 +14,18 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
-import no.usit.fsws.schemas.cdm.CdmProxy;
+import java.security.Principal;
+
 
 /**
- * Implementation of CDM proxy.
+ * Interface for Authorizer.
+ * @author 2904630
+ *
  */
-public class CdmProxyImpl implements CdmProxy {
+public interface Authorizer {
+  ProxyPrincipal authenticate(String username, String password);
 
-  @Override
-  public String getStudieData() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
+  boolean hasAuthorization(Principal principal, String authorizationType, String authorization);
 }

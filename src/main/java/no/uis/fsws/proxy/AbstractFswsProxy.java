@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
 import lombok.NonNull;
 import lombok.Setter;

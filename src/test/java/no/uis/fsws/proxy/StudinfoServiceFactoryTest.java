@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -22,6 +22,8 @@ import static org.junit.Assert.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import no.uis.fsws.proxy.StudinfoServiceFactory;
 
 import org.junit.Test;
 

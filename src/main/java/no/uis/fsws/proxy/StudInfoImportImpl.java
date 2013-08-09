@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.studinfo.impl;
+package no.uis.fsws.proxy;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -38,7 +38,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 import net.sf.saxon.lib.FeatureKeys;
-import no.uis.fsws.studinfo.StudInfoImport;
 import no.usit.fsws.schemas.studinfo.FsStudieinfo;
 import no.usit.fsws.studinfo.StudInfoService;
 

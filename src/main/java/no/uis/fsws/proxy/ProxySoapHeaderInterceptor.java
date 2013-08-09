@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
 import java.io.IOException;
 import java.io.OutputStream;

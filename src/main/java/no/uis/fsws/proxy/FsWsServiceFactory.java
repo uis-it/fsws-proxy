@@ -14,31 +14,16 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import org.junit.Test;
 
-public class ProxyPrincipalTest {
+/**
+ * Interface for StudinfoImport factory.
+ *
+ * @param <T>
+ */
+public interface FsWsServiceFactory<T> {
 
-  @Test
-  public void testEquals() {
-    Principal p1 = new ProxyPrincipalImpl("test", "Test");
-
-    Principal p2 = new ProxyPrincipalImpl("test", "Test");
-
-    assertThat(p1, equalTo(p2));
-    
-    Map<Principal, String> map = new HashMap<>();
-    
-    map.put(p1, "Test");
-    map.put(p2, "Test2");
-    
-    assertThat(map.size(), is(1));
-  }
+  T getService(ProxyPrincipal p);
 }

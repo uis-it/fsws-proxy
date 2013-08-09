@@ -50,12 +50,12 @@
     </jaxws:properties>
   </jaxws:endpoint>
 
-  <bean id="studinfoProxy" class="no.uis.fsws.proxy.impl.StudinfoProxyImpl">
+  <bean id="studinfoProxy" class="no.uis.fsws.proxy.StudinfoProxyImpl">
     <property name="serviceFactory" ref="studinfoServiceFactory"/>
     <property name="executor" ref="studinfoExecutor"/>
   </bean>
 
-  <bean id="cdmProxy" class="no.uis.fsws.proxy.impl.CdmProxyImpl">
+  <bean id="cdmProxy" class="no.uis.fsws.proxy.CdmProxyImpl">
   </bean>
   
   <bean id="studinfoExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean">
@@ -64,14 +64,14 @@
     <property name="threadNamePrefix" value="Studinfo-"/>
   </bean>
   
-  <bean id="authorizationInterceptor" class="no.uis.fsws.proxy.impl.ProxySoapHeaderInterceptor">
+  <bean id="authorizationInterceptor" class="no.uis.fsws.proxy.ProxySoapHeaderInterceptor">
     <property name="realm" value="UiS-WS"/>
     <property name="authorizer">
-      <bean class="no.uis.fsws.proxy.impl.AuthorizeAllAuthorizer"/>
+      <bean class="no.uis.fsws.proxy.AuthorizeAllAuthorizer"/>
     </property>
   </bean>
 
-  <bean id="studinfoServiceFactory" class="no.uis.fsws.proxy.impl.StudinfoServiceFactory">
+  <bean id="studinfoServiceFactory" class="no.uis.fsws.proxy.StudinfoServiceFactory">
     <property name="copyXml" value="true"/>
     <property name="fswsAddress" value="${fs.ws.studinfo.url}"/>
     <property name="transformerUrls">
@@ -79,7 +79,7 @@
         <entry key="uis" value="classpath:fspreprocess-uis.xsl"/>
       </map>
     </property>
-    <property name="xmlSourceParser" value="no.uis.fsws.studinfo.impl.SkippingAmpersandParser"/>
+    <property name="xmlSourceParser" value="no.uis.fsws.proxy.SkippingAmpersandParser"/>
   </bean>
   
   <bean class="org.springframework.jmx.export.MBeanExporter">

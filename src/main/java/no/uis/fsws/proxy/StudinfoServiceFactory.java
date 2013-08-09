@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,8 +28,6 @@ import javax.annotation.PreDestroy;
 import lombok.NonNull;
 import lombok.Setter;
 
-import no.uis.fsws.studinfo.StudInfoImport;
-import no.uis.fsws.studinfo.impl.StudInfoImportImpl;
 import no.usit.fsws.studinfo.StudInfoService;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;

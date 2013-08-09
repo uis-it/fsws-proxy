@@ -14,16 +14,19 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
-
+import no.usit.fsws.schemas.cdm.CdmProxy;
 
 /**
- * Interface for StudinfoImport factory.
- *
- * @param <T>
+ * Implementation of CDM proxy.
  */
-public interface FsWsServiceFactory<T> {
+public class CdmProxyImpl implements CdmProxy {
 
-  T getService(ProxyPrincipal p);
+  @Override
+  public String getStudieData() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

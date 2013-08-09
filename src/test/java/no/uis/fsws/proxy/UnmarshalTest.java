@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
@@ -30,8 +30,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import lombok.SneakyThrows;
-import no.uis.fsws.studinfo.impl.SkippingAmpersandParser;
-import no.uis.fsws.studinfo.impl.StudInfoImportImpl;
 import no.usit.fsws.schemas.studinfo.Emne;
 import no.usit.fsws.schemas.studinfo.FsStudieinfo;
 

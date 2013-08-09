@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -28,7 +28,6 @@ import javax.annotation.PreDestroy;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import lombok.Setter;
-import no.uis.fsws.studinfo.StudInfoImport;
 import no.usit.fsws.schemas.studinfo.Emne;
 import no.usit.fsws.schemas.studinfo.FsStudieinfo;
 import no.usit.fsws.schemas.studinfo.Kurs;

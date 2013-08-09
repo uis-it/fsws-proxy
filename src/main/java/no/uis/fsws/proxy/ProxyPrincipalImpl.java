@@ -14,23 +14,22 @@
    limitations under the License.
  */
 
-package no.uis.fsws.proxy.impl;
+package no.uis.fsws.proxy;
 
-import java.security.Principal;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
 /**
- * Simple Authorizer that does not verify the password and authorizes all users. 
+ * A username/password principal. 
  */
-public class AuthorizeAllAuthorizer implements Authorizer {
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
+public class ProxyPrincipalImpl implements ProxyPrincipal {
 
-  @Override
-  public ProxyPrincipal authenticate(String username, String password) {
-    return new ProxyPrincipalImpl(username, password);
-  }
-
-  @Override
-  public boolean hasAuthorization(Principal principal, String authorizationType, String authorization) {
-    return principal != null;
-  }
+  @Getter @NonNull private final String name;
+  @Getter private final String password;
 }
