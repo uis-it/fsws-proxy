@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:studinfo="http://fsws.usit.no/schemas/studinfo" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fsws.usit.no/schemas/studinfo">
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://fsws.usit.no/schemas/studinfo">
   <wsdl:types>
     <!--xsd:include schemaLocation="types.xml"/-->
     <xsd:schema targetNamespace="http://fsws.usit.no/schemas/studinfo">

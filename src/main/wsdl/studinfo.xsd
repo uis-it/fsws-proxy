@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   targetNamespace="http://fsws.usit.no/schemas/studinfo"
   xmlns:studinfo="http://fsws.usit.no/schemas/studinfo" elementFormDefault="qualified">
 
