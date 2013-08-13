@@ -28,6 +28,7 @@ import javax.annotation.PreDestroy;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import lombok.Setter;
+import lombok.SneakyThrows;
 import no.usit.fsws.schemas.studinfo.Emne;
 import no.usit.fsws.schemas.studinfo.FsStudieinfo;
 import no.usit.fsws.schemas.studinfo.Kurs;
@@ -95,59 +96,63 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
   }
 
   @Override
+  @SneakyThrows
   public List<Emne> getEmnerForOrgenhet(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak,
       final int institusjonsnr, final Integer fakultetsnr, final Integer instituttnr, final Integer gruppenr)
   {
     final StudInfoImport svc = getServiceForPrincipal();
-    try {
-      Future<List<Emne>> future = executor.submit(new Callable<List<Emne>>() {
+    Future<List<Emne>> future = executor.submit(new Callable<List<Emne>>() {
 
-        @Override
-        public List<Emne> call() throws Exception {
-          final FsStudieinfo sinfo = svc.fetchSubjects(institusjonsnr, fakultetsnr == null ? -1 : fakultetsnr.intValue(),
-            arstall.getYear(), terminkode.toString(), sprak.toString());
-          return sinfo.getEmne();
-        }
-      });
+      @Override
+      public List<Emne> call() throws Exception {
+        final FsStudieinfo sinfo = svc.fetchSubjects(institusjonsnr, fakultetsnr == null ? -1 : fakultetsnr.intValue(),
+          arstall.getYear(), terminkode.toString(), sprak.toString());
+        return sinfo.getEmne();
+      }
+    });
 
-      return future.get(timeoutMinutes, TimeUnit.MINUTES);
-    } catch(ExecutionException | InterruptedException | TimeoutException e) {
-      throw new RuntimeException(e);
-    }
+    return future.get(timeoutMinutes, TimeUnit.MINUTES);
   }
 
   @Override
+  @SneakyThrows
   public List<Emne> getEmne(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak,
       final int institusjonsnr, final String emnekode, final String versjonskode)
   {
     final StudInfoImport svc = getServiceForPrincipal();
-    try {
-      Future<List<Emne>> future = executor.submit(new Callable<List<Emne>>() {
+    Future<List<Emne>> future = executor.submit(new Callable<List<Emne>>() {
 
-        @Override
-        public List<Emne> call() throws Exception {
-          final FsStudieinfo sinfo = svc.fetchSubject(institusjonsnr, emnekode, versjonskode, arstall.getYear(),
-            terminkode.toString(), sprak.toString());
-          return sinfo.getEmne();
-        }
-      });
+      @Override
+      public List<Emne> call() throws Exception {
+        final FsStudieinfo sinfo = svc.fetchSubject(institusjonsnr, emnekode, versjonskode, arstall.getYear(),
+          terminkode.toString(), sprak.toString());
+        return sinfo.getEmne();
+      }
+    });
 
-      return future.get(timeoutMinutes, TimeUnit.MINUTES);
-    } catch(ExecutionException | InterruptedException | TimeoutException e) {
-      throw new RuntimeException(e);
-    }
+    return future.get(timeoutMinutes, TimeUnit.MINUTES);
   }
 
+  @Override
+  @SneakyThrows
+  public List<Kurs> getKurs(final XMLGregorianCalendar arstall, final Terminkode terminkode, final Sprakkode sprak, final int institusjonsnr,
+    Integer fakultetsnr, Integer instituttnr, Integer gruppenr)
+    {
+    final StudInfoImport svc = getServiceForPrincipal();
+    
+    Future<List<Kurs>> future = executor.submit(new Callable<List<Kurs>>() {
+
+      @Override
+      public List<Kurs> call() throws Exception {
+        final FsStudieinfo sinfo = svc.fetchCourses(institusjonsnr, arstall.getYear(), terminkode.toString(), sprak.toString());
+        return sinfo.getKurs();
+      }});
+    return null;
+  }
+  
   @PreDestroy
   public void cleanup() {
     executor.shutdown();
   }
 
-  @Override
-  public List<Kurs> getKurs(XMLGregorianCalendar arstall, Terminkode terminkode, Sprakkode sprak, int institusjonsnr,
-      Integer fakultetsnr, Integer instituttnr, Integer gruppenr)
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
 }
