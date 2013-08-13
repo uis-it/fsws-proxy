@@ -146,8 +146,10 @@ public class StudinfoProxyImpl extends AbstractFswsProxy<StudInfoImport> impleme
       public List<Kurs> call() throws Exception {
         final FsStudieinfo sinfo = svc.fetchCourses(institusjonsnr, arstall.getYear(), terminkode.toString(), sprak.toString());
         return sinfo.getKurs();
-      }});
-    return null;
+      }
+    });
+    
+    return future.get(timeoutMinutes, TimeUnit.MINUTES);
   }
   
   @PreDestroy
