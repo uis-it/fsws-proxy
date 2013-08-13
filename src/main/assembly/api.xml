@@ -12,7 +12,7 @@
       <directory>target/classes</directory>
       <outputDirectory>.</outputDirectory>
       <includes>
-        <include>no/uis/fsws/proxy/**/*.class</include>
+        <include>no/uis/fsws/**/*.class</include>
         <include>no/usit/fsws/**/*.class</include>
       </includes>
       <excludes>
