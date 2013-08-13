@@ -26,8 +26,10 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 
 /**
- * Dummy implementation for StudinfoImport. 
+ * Dummy implementation for StudinfoImport.
+ * @deprecated Not used 
  */
+@Deprecated
 public class EmptyStudinfoImport extends StudInfoImportImpl {
 
   @Override
